@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://colw8skg85cpr"]
+
+[ext_resource type="Script" uid="uid://dm1kutans8nfl" path="res://level_1_prolog.gd" id="1_gp6hd"]
+[ext_resource type="Texture2D" uid="uid://rkpphv33gkcx" path="res://4 parallax map/PNG/Battleground2/Bright/Battleground2.png" id="2_3jc4g"]
+[ext_resource type="PackedScene" uid="uid://2w8lhpb8ywha" path="res://level_1.tscn" id="2_gp6hd"]
+[ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="2_pio57"]
+[ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="3_pio57"]
+[ext_resource type="Texture2D" uid="uid://cvvyg65tp1iqw" path="res://Gemini_Generated_Image_tp41t6tp41t6tp41-04afa54b-f54c-4b84-ac47-7b3ea5a50f3e.jpg" id="4_bnmub"]
+[ext_resource type="PackedScene" uid="uid://cdjvyxg7f083v" path="res://kingnpc.tscn" id="5_3jc4g"]
+[ext_resource type="PackedScene" uid="uid://53hg0kie41yy" path="res://fade.tscn" id="8_p8qdj"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bnmub"]
+normal = Vector2(0.003875896, -0.99999243)
+distance = -272.92044
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6du0"]
+size = Vector2(1309, 232)
+
+[sub_resource type="Animation" id="Animation_gp6hd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p8qdj"]
+resource_name = "objective"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wre1u"]
+_data = {
+&"RESET": SubResource("Animation_gp6hd"),
+&"objective": SubResource("Animation_p8qdj")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gp6hd"]
+size = Vector2(94.5, 932)
+
+[node name="level1prolog" type="Node2D" unique_id=1634577227]
+script = ExtResource("1_gp6hd")
+next_level = ExtResource("2_gp6hd")
+
+[node name="kingcrownbg" type="Sprite2D" parent="." unique_id=785930921]
+texture_filter = 1
+position = Vector2(39, 3.4999294)
+scale = Vector2(1, 0.9598214)
+texture = ExtResource("4_bnmub")
+metadata/_edit_lock_ = true
+
+[node name="kingcrownbg2" type="Sprite2D" parent="." unique_id=514428696]
+texture_filter = 1
+position = Vector2(1999.0001, 4.9241037)
+scale = Vector2(1, 0.99088126)
+texture = ExtResource("2_3jc4g")
+metadata/_edit_lock_ = true
+
+[node name="WorldBoundary" type="StaticBody2D" parent="." unique_id=1961277103]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary" unique_id=1100874424]
+position = Vector2(8, 22)
+shape = SubResource("WorldBoundaryShape2D_bnmub")
+
+[node name="WorldBoundary2" type="StaticBody2D" parent="." unique_id=159635451]
+texture_filter = 1
+position = Vector2(-20, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary2" unique_id=106665677]
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_bnmub")
+metadata/_edit_lock_ = true
+
+[node name="WorldBoundary3" type="StaticBody2D" parent="." unique_id=815179573]
+texture_filter = 1
+position = Vector2(2924, 39)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary3" unique_id=1580102584]
+position = Vector2(-549, -61)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_j6du0")
+
+[node name="UI" parent="." unique_id=614365459 instance=ExtResource("3_pio57")]
+
+[node name="player" parent="." unique_id=398429457 instance=ExtResource("2_pio57")]
+position = Vector2(586, 92)
+scale = Vector2(3, 3)
+collision_layer = 130
+
+[node name="Camera2D2" type="Camera2D" parent="player" unique_id=1749824786]
+position = Vector2(12.333328, -37)
+zoom = Vector2(0.8, 0.8)
+limit_right = 2600
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="player" unique_id=783281340]
+offset_left = -63.666668
+offset_top = -139.66666
+offset_right = 122.66667
+offset_bottom = -73.33333
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "TALK  TO QUEEN
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player" unique_id=1765250048]
+libraries/ = SubResource("AnimationLibrary_wre1u")
+
+[node name="kingnpc" parent="." unique_id=632407528 instance=ExtResource("5_3jc4g")]
+position = Vector2(-226, 151)
+scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1032075434]
+collision_layer = 0
+collision_mask = 130
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=937065957]
+position = Vector2(2126, 33)
+shape = SubResource("RectangleShape2D_gp6hd")
+
+[node name="fadetransition" parent="." unique_id=1346227553 instance=ExtResource("8_p8qdj")]
+offset_left = -560.0
+offset_top = -749.0
+offset_right = 1554.0
+offset_bottom = 648.0
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

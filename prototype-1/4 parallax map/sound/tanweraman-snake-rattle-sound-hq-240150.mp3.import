@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://da0r53qq7wrc"
+path="res://.godot/imported/tanweraman-snake-rattle-sound-hq-240150.mp3-8a50ee93f5a7ce0b45bf49d7346f4d24.mp3str"
+
+[deps]
+
+source_file="res://4 parallax map/sound/tanweraman-snake-rattle-sound-hq-240150.mp3"
+dest_files=["res://.godot/imported/tanweraman-snake-rattle-sound-hq-240150.mp3-8a50ee93f5a7ce0b45bf49d7346f4d24.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

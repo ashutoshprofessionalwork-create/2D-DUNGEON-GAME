@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://c2ekjthvsv7e4"]
+
+[sub_resource type="Curve" id="Curve_ru3gt"]
+_data = [Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Gradient" id="Gradient_ru3gt"]
+
+[sub_resource type="Gradient" id="Gradient_c0y03"]
+offsets = PackedFloat32Array(0.28623188, 0.9782609, 1)
+colors = PackedColorArray(0.6355537, 1.4559553e-06, 4.813075e-07, 1, 0.8623188, 0.8623188, 0.8623188, 1, 1, 1, 1, 1)
+
+[node name="AttackEffect" type="CPUParticles2D" unique_id=1161129410]
+amount = 15
+lifetime = 0.2
+explosiveness = 1.0
+direction = Vector2(0, 0)
+angular_velocity_min = 300.0
+angular_velocity_max = 300.0
+orbit_velocity_min = 300.0
+orbit_velocity_max = 300.0
+scale_amount_min = 20.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_ru3gt")
+color = Color(0.05882353, 0, 1, 1)
+color_ramp = SubResource("Gradient_ru3gt")
+color_initial_ramp = SubResource("Gradient_c0y03")

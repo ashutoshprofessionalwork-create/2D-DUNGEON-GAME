@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dy3dyaf6pcugl"
+path="res://.godot/imported/dragon-studio-dog-barking-406629.mp3-52050a3cc161927594171f6eafc1159c.mp3str"
+
+[deps]
+
+source_file="res://4 parallax map/sound/dragon-studio-dog-barking-406629.mp3"
+dest_files=["res://.godot/imported/dragon-studio-dog-barking-406629.mp3-52050a3cc161927594171f6eafc1159c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

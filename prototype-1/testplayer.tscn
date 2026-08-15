@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://2fumvskkf0xw"]
+
+[ext_resource type="Script" uid="uid://d2e4f28um1yqv" path="res://test_player.gd" id="1_evgla"]
+[ext_resource type="PackedScene" uid="uid://buv60h1nyy50p" path="res://bullet.tscn" id="2_uefio"]
+[ext_resource type="Texture2D" uid="uid://dqeqtl54lbbnh" path="res://vecteezy_game-heart-pixelated_54978926.png" id="2_voxbr"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=401728235]
+script = ExtResource("1_evgla")
+bullet_node = ExtResource("2_uefio")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=255648239]
+texture = ExtResource("2_voxbr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=830775321]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1674641208]

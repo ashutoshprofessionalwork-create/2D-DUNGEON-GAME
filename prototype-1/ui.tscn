@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cs54ba4361we4"]
+
+[ext_resource type="Script" uid="uid://bl060x38wndvg" path="res://hearts_ui.gd" id="1_m6e0p"]
+[ext_resource type="Texture2D" uid="uid://d3q5cuawvap56" path="res://HealthUI.png" id="2_27fn8"]
+[ext_resource type="Script" uid="uid://bsxfkve5cpktq" path="res://label.gd" id="3_27fn8"]
+
+[node name="UI" type="CanvasLayer" unique_id=614365459]
+
+[node name="HeartsUI" type="Control" parent="." unique_id=433384619]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_m6e0p")
+
+[node name="HeartsSprite" type="Sprite2D" parent="HeartsUI" unique_id=1857842205]
+texture_filter = 1
+position = Vector2(1000, 80)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_27fn8")
+vframes = 7
+
+[node name="Label" type="Label" parent="." unique_id=536300268]
+offset_right = 1.0
+offset_bottom = 23.0
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 40
+script = ExtResource("3_27fn8")

@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://nt13jjuuvwp1"]
+
+[ext_resource type="Texture2D" uid="uid://c21mxh4utoknx" path="res://NPCs/Idle1/1.png" id="1_wgsso"]
+[ext_resource type="Texture2D" uid="uid://bfcjowuoqs16c" path="res://Parallax_Backgrounds_Cave/1.png" id="2_igs2m"]
+[ext_resource type="Script" uid="uid://gwge1yx7dn54" path="res://playbuttonmenu.gd" id="3_3pujl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t5l4k"]
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bell2"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="mainmenu" type="Control" unique_id=690371906]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1194494687]
+layout_mode = 0
+offset_right = 1147.0
+offset_bottom = 664.0
+color = Color(0.3019608, 0.22745098, 0.16470589, 1)
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="." unique_id=1486850914]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 85.0
+offset_right = 1039.0
+offset_bottom = 472.0
+text = "MAIN MENU"
+label_settings = SubResource("LabelSettings_t5l4k")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1238577719]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 359.0
+offset_right = 270.0
+offset_bottom = 565.0
+texture = ExtResource("1_wgsso")
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1061740291]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 1152.0
+offset_bottom = 671.0
+texture = ExtResource("2_igs2m")
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Button" parent="." unique_id=619217887]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 221.0
+offset_right = 784.0
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_bell2")
+text = "TRY AGAIN"
+script = ExtResource("3_3pujl")

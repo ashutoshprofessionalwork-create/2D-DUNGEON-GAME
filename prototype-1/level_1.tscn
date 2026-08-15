@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://2w8lhpb8ywha"]
+
+[ext_resource type="Script" uid="uid://bud52y656ifa" path="res://level_1.gd" id="1_5hph3"]
+[ext_resource type="Texture2D" uid="uid://ly7aoi1j031h" path="res://free-vampires-locations-battle-background-pack/PNG/2/throne room.png" id="1_hn12h"]
+[ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="2_ihfcg"]
+[ext_resource type="PackedScene" uid="uid://bttwc1oyjhcsg" path="res://background.tscn" id="2_j7kpp"]
+[ext_resource type="PackedScene" uid="uid://cielyiiadalby" path="res://boss_1.tscn" id="4_ihfcg"]
+[ext_resource type="PackedScene" uid="uid://2fumvskkf0xw" path="res://testplayer.tscn" id="6_5hph3"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bnmub"]
+normal = Vector2(0.003875896, -0.99999243)
+distance = -272.92044
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6du0"]
+size = Vector2(1309, 232)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hph3"]
+size = Vector2(94.5, 932)
+
+[node name="level1" type="Node2D" unique_id=1634577227]
+script = ExtResource("1_5hph3")
+next_level = ExtResource("2_j7kpp")
+
+[node name="kingcrownbg" type="Sprite2D" parent="." unique_id=785930921]
+texture_filter = 1
+position = Vector2(-52, 188)
+texture = ExtResource("1_hn12h")
+metadata/_edit_lock_ = true
+
+[node name="UI" parent="." unique_id=614365459 instance=ExtResource("2_ihfcg")]
+
+[node name="WorldBoundary" type="StaticBody2D" parent="." unique_id=1961277103]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary" unique_id=1100874424]
+position = Vector2(8, 22)
+shape = SubResource("WorldBoundaryShape2D_bnmub")
+
+[node name="WorldBoundary2" type="StaticBody2D" parent="." unique_id=159635451]
+texture_filter = 1
+position = Vector2(-1578, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary2" unique_id=106665677]
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_bnmub")
+metadata/_edit_lock_ = true
+
+[node name="WorldBoundary3" type="StaticBody2D" parent="." unique_id=815179573]
+texture_filter = 1
+position = Vector2(2924, 39)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary3" unique_id=1580102584]
+position = Vector2(-1077, -63)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_j6du0")
+
+[node name="Boss1" parent="." unique_id=173598566 instance=ExtResource("4_ihfcg")]
+texture_filter = 1
+position = Vector2(68.00001, -2.000002)
+scale = Vector2(4, 4)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1794464945]
+position = Vector2(-179, 0)
+collision_layer = 0
+collision_mask = 130
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1513572837]
+position = Vector2(1866, 33)
+shape = SubResource("RectangleShape2D_5hph3")
+
+[node name="player" parent="." unique_id=401728235 instance=ExtResource("6_5hph3")]
+position = Vector2(-115, -10)
+scale = Vector2(0.02, 0.02)
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

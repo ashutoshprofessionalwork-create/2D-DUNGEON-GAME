@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://cts3p4boafeh1"]
+
+[ext_resource type="Script" uid="uid://cpum6mee6ufoc" path="res://deathmenu.gd" id="1_layj8"]
+[ext_resource type="Texture2D" uid="uid://cdue1f75finq7" path="res://menu/wp2954769-dead-wallpapers.jpg" id="1_rq560"]
+[ext_resource type="Script" uid="uid://jsndtkxrbdxf" path="res://labeldeathmenu.gd" id="1_sxdu0"]
+[ext_resource type="Texture2D" uid="uid://ddkmlalfnv7k8" path="res://menu/YOU-DIE-8-6-2026.png" id="2_dvmb2"]
+[ext_resource type="Texture2D" uid="uid://dq1d8crq7pm8l" path="res://menu/RESTART-8-6-2026.png" id="2_loywc"]
+[ext_resource type="Texture2D" uid="uid://k5t8ejpffl5x" path="res://menu/RESTART-8-6-2026 (1).png" id="3_1wblh"]
+[ext_resource type="Texture2D" uid="uid://3t8de1w8vshw" path="res://menu/YOU-DIE-8-6-2026 (1).png" id="3_nog60"]
+[ext_resource type="Texture2D" uid="uid://diseris0c1pcs" path="res://menu/SCORE-8-6-2026 (1).png" id="5_layj8"]
+[ext_resource type="Texture2D" uid="uid://dxlx5n1gxxw8p" path="res://menu/SCORE-8-6-2026.png" id="6_22f2e"]
+[ext_resource type="AudioStream" uid="uid://cr7pau4dax6of" path="res://menu/sad-meow-song.mp3" id="10_22f2e"]
+[ext_resource type="AudioStream" uid="uid://cof015wo2pejv" path="res://menu/m-e-o-w.mp3" id="11_06560"]
+
+[node name="deathmenu" type="Node2D" unique_id=839416906]
+script = ExtResource("1_layj8")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=503985791]
+offset_top = -2.0
+offset_right = 1350.0
+offset_bottom = 758.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=869125368]
+texture_filter = 1
+position = Vector2(16, 324)
+scale = Vector2(0.5925781, 0.50277776)
+texture = ExtResource("1_rq560")
+
+[node name="Control" type="Control" parent="." unique_id=1436905841]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="RESTART" type="TextureButton" parent="Control" unique_id=1961537363]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -8.45
+anchor_top = 3.5250008
+anchor_right = 7.95
+anchor_bottom = 4.5
+offset_left = 473.0
+offset_top = 291.0
+offset_right = 841.0
+offset_bottom = 505.0
+scale = Vector2(0.7, 0.7)
+texture_normal = ExtResource("2_loywc")
+texture_pressed = ExtResource("3_1wblh")
+texture_hover = ExtResource("3_1wblh")
+metadata/_edit_use_anchors_ = true
+
+[node name="score" type="TextureButton" parent="Control" unique_id=2119361186]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -3.425
+anchor_top = 0.725
+anchor_right = 12.975
+anchor_bottom = 3.125
+offset_left = 473.0
+offset_top = 291.0
+offset_right = 841.0
+offset_bottom = 505.0
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("5_layj8")
+texture_pressed = ExtResource("6_22f2e")
+texture_hover = ExtResource("6_22f2e")
+metadata/_edit_use_anchors_ = true
+
+[node name="youdead" type="TextureButton" parent="Control" unique_id=990363203]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -9.725
+anchor_top = -6.525
+anchor_right = 6.675
+anchor_bottom = -5.1
+offset_left = 473.0
+offset_top = 291.0
+offset_right = 841.0
+offset_bottom = 505.0
+texture_normal = ExtResource("2_dvmb2")
+texture_hover = ExtResource("3_nog60")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="." unique_id=874883541]
+offset_left = 746.0
+offset_top = 328.0
+offset_right = 1081.0
+offset_bottom = 438.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "-------------"
+script = ExtResource("1_sxdu0")
+
+[node name="bg" type="AudioStreamPlayer2D" parent="." unique_id=2042312665]
+stream = ExtResource("10_22f2e")
+volume_db = 10.0
+autoplay = true
+
+[node name="bgpress" type="AudioStreamPlayer2D" parent="." unique_id=1066417133]
+stream = ExtResource("11_06560")
+volume_db = 10.0
+
+[connection signal="pressed" from="Control/RESTART" to="." method="_on_restart_pressed"]

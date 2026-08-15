@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://cdjvyxg7f083v"]
+
+[ext_resource type="Script" uid="uid://ddfylgk4jo5j4" path="res://kingnpc.gd" id="1_bn8mw"]
+[ext_resource type="Texture2D" uid="uid://bw4gxsk6r7fdp" path="res://NPCs/Speak3/1.png" id="2_ojont"]
+[ext_resource type="Texture2D" uid="uid://dl3syaq7licob" path="res://NPCs/Speak3/2.png" id="3_plctp"]
+[ext_resource type="Texture2D" uid="uid://bmblac4uwkuai" path="res://NPCs/Speak3/3.png" id="4_lgdjq"]
+[ext_resource type="Texture2D" uid="uid://b6rjod7y1xr3" path="res://NPCs/Speak3/4.png" id="5_yi151"]
+[ext_resource type="Texture2D" uid="uid://7tj4bwbdqq3w" path="res://NPCs/Idle3/1.png" id="6_6sncw"]
+[ext_resource type="Texture2D" uid="uid://dlinm40pl413d" path="res://NPCs/Idle3/2.png" id="7_h5j15"]
+[ext_resource type="Texture2D" uid="uid://bct3qpqgj745s" path="res://NPCs/Idle3/3.png" id="8_y84kd"]
+[ext_resource type="Texture2D" uid="uid://jqm15m88lb3y" path="res://NPCs/Idle3/4.png" id="9_uodyr"]
+[ext_resource type="PackedScene" uid="uid://cdask3hg78erf" path="res://dialogchat.tscn" id="10_ojont"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jij08"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rd3m8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ojont")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_plctp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lgdjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yi151")
+}],
+"loop": false,
+"name": &"chat",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_6sncw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_h5j15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_y84kd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_uodyr")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yn7v5"]
+radius = 149.48244
+
+[node name="rajmata" type="CharacterBody2D" unique_id=632407528]
+script = ExtResource("1_bn8mw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=792009510]
+position = Vector2(-2, 19)
+shape = SubResource("CapsuleShape2D_jij08")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=986220176]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_rd3m8")
+animation = &"chat"
+frame = 3
+frame_progress = 1.0
+metadata/_edit_lock_ = true
+
+[node name="chat_detection_area" type="Area2D" parent="." unique_id=481050313]
+collision_layer = 0
+collision_mask = 130
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection_area" unique_id=1860927512]
+shape = SubResource("CircleShape2D_yn7v5")
+
+[node name="Timer" type="Timer" parent="." unique_id=286971796]
+autostart = true
+
+[node name="dialogchat" parent="." unique_id=1790839209 instance=ExtResource("10_ojont")]
+offset_left = 51.0
+offset_top = -14.0000305
+offset_right = 88.0
+offset_bottom = 26.0
+scale = Vector2(1.5, 1.5)
+
+[connection signal="body_entered" from="chat_detection_area" to="." method="_on_chat_detection_area_body_entered"]
+[connection signal="body_exited" from="chat_detection_area" to="." method="_on_chat_detection_area_body_exited"]
+[connection signal="dialog_finished" from="dialogchat" to="." method="_on_dialogchat_dialog_finished"]

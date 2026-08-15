@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cupcxw75tbjvf"]
+
+[ext_resource type="Script" uid="uid://le60kvnrn2do" path="res://hit_effect.gd" id="1_2firw"]
+
+[node name="HitEffect_orange" type="CPUParticles2D" unique_id=1998256127]
+amount = 50
+explosiveness = 0.8
+randomness = 1.0
+fixed_fps = 60
+spread = 180.0
+gravity = Vector2(0, 400)
+initial_velocity_min = 151.69
+initial_velocity_max = 151.69
+scale_amount_max = 2.0
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
+color = Color(0.54901963, 0.3372549, 0, 1)
+anim_speed_min = 6.24
+anim_speed_max = 6.24
+script = ExtResource("1_2firw")

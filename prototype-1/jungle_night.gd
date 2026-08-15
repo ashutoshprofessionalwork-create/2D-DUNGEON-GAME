@@ -1,0 +1,23 @@
+extends Node2D
+@export var next_level:PackedScene
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$player/AnimationPlayer.play("label_junglenight")
+	print("ready")
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+
+
+
+
+
+
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	get_tree().change_scene_to_packed.call_deferred(next_level)
+	print("body enter")
+
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	print("area exited")

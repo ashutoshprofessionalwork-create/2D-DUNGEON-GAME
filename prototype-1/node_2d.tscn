@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ct736bp476njy"]
+
+[ext_resource type="Script" uid="uid://pkr4rey2jpvw" path="res://node_2d.gd" id="1_0hol4"]
+[ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="2_epypp"]
+[ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="3_epypp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epypp"]
+size = Vector2(374, 278)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_epypp"]
+distance = -300.0
+
+[node name="Node2D" type="Node2D" unique_id=361332653]
+script = ExtResource("1_0hol4")
+
+[node name="player" parent="." unique_id=398429457 instance=ExtResource("2_epypp")]
+position = Vector2(7, -2)
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="player" unique_id=216842303]
+
+[node name="UI" parent="." unique_id=614365459 instance=ExtResource("3_epypp")]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=572399711]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1111949351]
+position = Vector2(498, 162)
+shape = SubResource("RectangleShape2D_epypp")
+
+[node name="WorldBoundary" type="StaticBody2D" parent="." unique_id=1075748170]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundary" unique_id=420947616]
+shape = SubResource("WorldBoundaryShape2D_epypp")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://biusa4k4nvshc"]
+
+[ext_resource type="Texture2D" uid="uid://cuotsl6tan4q2" path="res://BACKGROUND_FOREST/BACKGROUND_FOREST/PREVIEW.png" id="1_dfhpv"]
+[ext_resource type="Script" uid="uid://busoenb6c40td" path="res://jungle_night.gd" id="1_xth5d"]
+[ext_resource type="PackedScene" uid="uid://dbc6h3fwrkukc" path="res://level_2.tscn" id="2_02w3y"]
+[ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="2_nbwue"]
+[ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="3_nbwue"]
+[ext_resource type="PackedScene" uid="uid://cgct8ku32ofyt" path="res://spawner.tscn" id="4_838fg"]
+[ext_resource type="PackedScene" uid="uid://cg3w6xh8plqxc" path="res://scoripian.tscn" id="5_xth5d"]
+[ext_resource type="PackedScene" uid="uid://c66egd8dsr5a1" path="res://hyena.tscn" id="6_02w3y"]
+[ext_resource type="Script" uid="uid://2oyq0vnqy1nk" path="res://enemy_spawn_info.gd" id="7_02w3y"]
+[ext_resource type="PackedScene" uid="uid://c44wvoahl82x4" path="res://snake.tscn" id="7_sa8ct"]
+[ext_resource type="PackedScene" uid="uid://cusggwh1k0l2c" path="res://hit_effect.tscn" id="9_sa8ct"]
+[ext_resource type="PackedScene" uid="uid://cupcxw75tbjvf" path="res://hit_effect_orange.tscn" id="11_3gnpb"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eiued"]
+distance = -29.0
+
+[sub_resource type="Animation" id="Animation_xth5d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../player/Label:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_02w3y"]
+resource_name = "label_junglenight"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../player/Label:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sa8ct"]
+_data = {
+&"RESET": SubResource("Animation_xth5d"),
+&"label_junglenight": SubResource("Animation_02w3y")
+}
+
+[sub_resource type="Resource" id="Resource_4ipp6"]
+script = ExtResource("7_02w3y")
+enemy_scene = ExtResource("6_02w3y")
+hit_effect_scene = ExtResource("9_sa8ct")
+metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
+
+[sub_resource type="Resource" id="Resource_p373a"]
+script = ExtResource("7_02w3y")
+enemy_scene = ExtResource("5_xth5d")
+hit_effect_scene = ExtResource("11_3gnpb")
+metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
+
+[sub_resource type="Resource" id="Resource_cwkpr"]
+script = ExtResource("7_02w3y")
+enemy_scene = ExtResource("7_sa8ct")
+hit_effect_scene = ExtResource("9_sa8ct")
+metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02w3y"]
+size = Vector2(948.875, 932)
+
+[node name="jungle_night" type="Node2D" unique_id=1441517567]
+script = ExtResource("1_xth5d")
+next_level = ExtResource("2_02w3y")
+
+[node name="UI" parent="." unique_id=614365459 instance=ExtResource("3_nbwue")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=971858953]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=589666308]
+motion_mirroring = Vector2(1634, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=869982327]
+texture_filter = 1
+position = Vector2(817, 0)
+texture = ExtResource("1_dfhpv")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=501879051]
+motion_mirroring = Vector2(3268, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1080660972]
+position = Vector2(2451, 0)
+texture = ExtResource("1_dfhpv")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1289217284]
+position = Vector2(0, 148)
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1350854499]
+shape = SubResource("WorldBoundaryShape2D_eiued")
+
+[node name="player" parent="." unique_id=398429457 instance=ExtResource("2_nbwue")]
+position = Vector2(-42, 93)
+
+[node name="Camera2D" type="Camera2D" parent="player" unique_id=1979768574]
+zoom = Vector2(1.8, 1.8)
+limit_left = 90
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player" unique_id=1024917896]
+root_node = NodePath("../../UI")
+libraries/ = SubResource("AnimationLibrary_sa8ct")
+
+[node name="Label" type="Label" parent="player" unique_id=1798133818]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -50.0
+offset_top = -132.0
+offset_right = 100.0
+offset_bottom = -69.0
+theme_override_font_sizes/font_size = 21
+text = "NIGHT TIMe💀
+"
+
+[node name="spawner" parent="." unique_id=282977003 instance=ExtResource("4_838fg")]
+position = Vector2(0, 211)
+spawn_list = Array[ExtResource("7_02w3y")]([SubResource("Resource_4ipp6"), SubResource("Resource_p373a"), SubResource("Resource_cwkpr")])
+base_spawn_time = 1.0
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1037215873]
+collision_layer = 0
+collision_mask = 130
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=68945318]
+position = Vector2(13352, -80)
+shape = SubResource("RectangleShape2D_02w3y")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

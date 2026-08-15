@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://2dy6gi074ci5"]
+
+[ext_resource type="Script" uid="uid://cd435x5dlx6cj" path="res://buff_item.gd" id="1_aidjo"]
+[ext_resource type="Texture2D" uid="uid://dqeqtl54lbbnh" path="res://vecteezy_game-heart-pixelated_54978926.png" id="1_q8cfv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aidjo"]
+radius = 25.0
+
+[node name="BuffItem" type="Area2D" unique_id=1166989077]
+z_index = 2
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_aidjo")
+magnet_speed = 200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=648699391]
+scale = Vector2(0.008253993, 0.008756618)
+texture = ExtResource("1_q8cfv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=568558170]
+shape = SubResource("CircleShape2D_aidjo")

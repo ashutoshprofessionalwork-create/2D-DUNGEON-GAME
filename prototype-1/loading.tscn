@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://wce0x3bnr01h"]
+
+[ext_resource type="Texture2D" uid="uid://bkg14d2lv828a" path="res://menu/Gemini_Generated_Image_tfgxg1tfgxg1tfgx.png" id="1_gov4d"]
+[ext_resource type="Script" uid="uid://6gjpodrmu34a" path="res://loading.gd" id="1_pg7vo"]
+[ext_resource type="PackedScene" uid="uid://53hg0kie41yy" path="res://fade.tscn" id="3_1l04a"]
+
+[node name="LOADING" type="Node2D" unique_id=1224635184]
+script = ExtResource("1_pg7vo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=185251393]
+position = Vector2(557.75, 363.50003)
+scale = Vector2(0.61296105, 0.37523025)
+texture = ExtResource("1_gov4d")
+
+[node name="Label" type="Label" parent="." unique_id=1019191743]
+offset_left = 882.0
+offset_top = 226.0
+offset_right = 1230.0
+offset_bottom = 339.0
+theme_override_colors/font_color = Color(0, 1, 0.40784314, 1)
+theme_override_font_sizes/font_size = 29
+text = "AI TAKING MY JOB
+😭😭😭	"
+
+[node name="Label3" type="Label" parent="." unique_id=1493994008]
+offset_left = 137.0
+offset_top = 584.0
+offset_right = 1070.0
+offset_bottom = 639.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "TIP : THE GAME IS HARD BUT THE DEV IS HARDER"
+metadata/_edit_lock_ = true
+
+[node name="Label2" type="Label" parent="." unique_id=530671257]
+offset_left = 44.0
+offset_top = -13.0
+offset_right = 721.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 60
+text = "LOADING GAME : "
+metadata/_edit_lock_ = true
+
+[node name="Timer" type="Timer" parent="." unique_id=191133261]
+
+[node name="fadetransition" parent="." unique_id=1346227553 instance=ExtResource("3_1l04a")]
+
+[node name="Timer" type="Timer" parent="fadetransition" unique_id=1313392246]

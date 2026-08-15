@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://brlanl03n0f46"
+path="res://.godot/imported/freesound_community-monster-bite-44538.mp3-6b77c7058f01df1e52fd8d37807c82de.mp3str"
+
+[deps]
+
+source_file="res://4 parallax map/sound/freesound_community-monster-bite-44538.mp3"
+dest_files=["res://.godot/imported/freesound_community-monster-bite-44538.mp3-6b77c7058f01df1e52fd8d37807c82de.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

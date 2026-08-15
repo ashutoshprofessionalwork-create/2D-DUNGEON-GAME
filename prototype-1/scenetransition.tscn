@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://f7jync0psf7f"]
+
+[ext_resource type="Script" uid="uid://ck3d6qrebyxp2" path="res://scenetransition.gd" id="1_h2vx8"]
+
+[node name="level_transition" type="CanvasLayer" unique_id=267990025]
+process_mode = 3
+script = ExtResource("1_h2vx8")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1941741318]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(1, 0.39307866, 0.74288917, 1)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://p5c7a0f0fgw2"
+path="res://.godot/imported/fahhh_KcgAXfs.mp3-acd49aaa51b770c9d7ec570d52728f37.mp3str"
+
+[deps]
+
+source_file="res://4 parallax map/sound/fahhh_KcgAXfs.mp3"
+dest_files=["res://.godot/imported/fahhh_KcgAXfs.mp3-acd49aaa51b770c9d7ec570d52728f37.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

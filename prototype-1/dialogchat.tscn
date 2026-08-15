@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cdask3hg78erf"]
+
+[ext_resource type="Script" uid="uid://dcait61wccsuu" path="res://dialogchat.gd" id="1_jhity"]
+[ext_resource type="Texture2D" uid="uid://cdwnki7j1wsr" path="res://—Pngtree—blue chat message box free_7637114.png" id="2_0svs2"]
+
+[node name="dialogchat" type="Control" unique_id=1790839209]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 303.0
+offset_top = 507.99997
+offset_right = 343.0
+offset_bottom = 548.0
+script = ExtResource("1_jhity")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1281011289]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -84.0
+offset_right = 53.0
+offset_bottom = -22.0
+texture = ExtResource("2_0svs2")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Name" type="RichTextLabel" parent="NinePatchRect" unique_id=782616378]
+layout_mode = 0
+offset_left = 24.000002
+offset_top = 13.0
+offset_right = 323.99997
+offset_bottom = 58.0
+scale = Vector2(0.4, 0.4)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "RAJMATA "
+
+[node name="Text" type="RichTextLabel" parent="NinePatchRect" unique_id=143510384]
+layout_mode = 0
+offset_left = 22.6
+offset_top = 23.400005
+offset_right = 242.6
+offset_bottom = 120.066666
+scale = Vector2(0.3, 0.3)
