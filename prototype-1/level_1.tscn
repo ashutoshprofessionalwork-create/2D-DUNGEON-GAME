@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bud52y656ifa" path="res://level_1.gd" id="1_5hph3"]
 [ext_resource type="Texture2D" uid="uid://ly7aoi1j031h" path="res://free-vampires-locations-battle-background-pack/PNG/2/throne room.png" id="1_hn12h"]
+[ext_resource type="PackedScene" uid="uid://colw8skg85cpr" path="res://level_1_prolog.tscn" id="2_5hph3"]
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="2_ihfcg"]
-[ext_resource type="PackedScene" uid="uid://bttwc1oyjhcsg" path="res://background.tscn" id="2_j7kpp"]
 [ext_resource type="PackedScene" uid="uid://cielyiiadalby" path="res://boss_1.tscn" id="4_ihfcg"]
-[ext_resource type="PackedScene" uid="uid://2fumvskkf0xw" path="res://testplayer.tscn" id="6_5hph3"]
+[ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="5_rka8t"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bnmub"]
 normal = Vector2(0.003875896, -0.99999243)
@@ -19,7 +19,7 @@ size = Vector2(94.5, 932)
 
 [node name="level1" type="Node2D" unique_id=1634577227]
 script = ExtResource("1_5hph3")
-next_level = ExtResource("2_j7kpp")
+next_level = ExtResource("2_5hph3")
 
 [node name="kingcrownbg" type="Sprite2D" parent="." unique_id=785930921]
 texture_filter = 1
@@ -57,7 +57,7 @@ shape = SubResource("RectangleShape2D_j6du0")
 [node name="Boss1" parent="." unique_id=173598566 instance=ExtResource("4_ihfcg")]
 texture_filter = 1
 position = Vector2(68.00001, -2.000002)
-scale = Vector2(4, 4)
+scale = Vector2(10, 10)
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1794464945]
 position = Vector2(-179, 0)
@@ -68,9 +68,12 @@ collision_mask = 130
 position = Vector2(1866, 33)
 shape = SubResource("RectangleShape2D_5hph3")
 
-[node name="player" parent="." unique_id=401728235 instance=ExtResource("6_5hph3")]
-position = Vector2(-115, -10)
-scale = Vector2(0.02, 0.02)
+[node name="player" parent="." unique_id=398429457 instance=ExtResource("5_rka8t")]
+position = Vector2(-395, -16)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1684265427]
+position = Vector2(-40, 177)
+zoom = Vector2(0.3, 0.3)
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

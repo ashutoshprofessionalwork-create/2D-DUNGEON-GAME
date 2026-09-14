@@ -13,7 +13,7 @@ var health = 100
 @onready var sfx_walk: AudioStreamPlayer2D = $sfx_walk
 @onready var sfx_jump: AudioStreamPlayer2D = $sfx_jump
  
-@onready var health_bar = get_parent().get_node("UI/HeartsUI")
+@onready var health_bar = get_parent().get_node("UI/HeartsUI") if get_parent() and get_parent().has_node("UI/HeartsUI") else null
 var gravity = 1300
 @export var void_dist=100
 
@@ -26,9 +26,11 @@ var facing_direction = 1
 var combo_cooldown_timer = 0.0
 
 func _ready():
+	add_to_group("player")
 	up_direction = Vector2.UP
 	await get_tree().process_frame
-	health_bar.update_hearts(health, 100)
+	if health_bar:
+		health_bar.update_hearts(health, 100)
 	
 	var level_name = get_parent().name
 	
@@ -45,7 +47,7 @@ func _ready():
 		JUMP_VELOCITY = -600.0
 		ROLL_SPEED = 900
 		attack_damage = 10
-		attack_range = 290
+		attack_range = 310
 		gravity=2000
 	
 	elif level_name == "jungle_night":
@@ -67,7 +69,8 @@ func _ready():
 		JUMP_VELOCITY = -500
 		ROLL_SPEED = 1200
 		attack_damage = 10
-		attack_range = 80.0
+		attack_range = 280.0
+		scale=Vector2(3,3)
 		
 	elif level_name == "level2":
 		attack_range = 80.0
@@ -75,6 +78,7 @@ func _ready():
 		JUMP_VELOCITY = -300.0
 		ROLL_SPEED = 220
 		void_dist=200
+		
 
 	anim.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
@@ -205,7 +209,8 @@ func take_damage(amount):
 		return
 
 	health -= amount
-	health_bar.update_hearts(health, 100)
+	if health_bar:
+		health_bar.update_hearts(health, 100)
 	
 	anim.modulate = Color(5.0, 0.3, 0.3, 1.0)
 	var flash_timer = get_tree().create_timer(0.15)

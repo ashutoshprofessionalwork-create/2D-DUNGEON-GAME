@@ -1,34 +1,91 @@
+class_name Boss1
 extends CharacterBody2D
 
-@onready var player = get_parent().find_child("player")
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var progress_bar = $UI/ProgressBar
+signal boss_died
 
-var direction : Vector2
+@export var max_health: int = 400
+@export var speed: float = 220.0
+@export var attack_damage: int = 20
+@export var attack_range: float = 260.0
+@export var detection_range: float = 3000.0
 
-var health: = 10:
+@export var heavy_attack_damage: int = 45
+@export var heavy_attack_range: float = 220.0
+@export var heavy_attack_cooldown: float = 8.0
+
+@export var taunt_cooldown: float = 6.0
+
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision: CollisionShape2D = $CollisionShape2D
+@onready var fsm = $FiniteStateMachine
+@onready var progress_bar = $UI/ProgressBar if has_node("UI/ProgressBar") else null
+
+var player: Node2D = null
+var direction: Vector2 = Vector2.ZERO
+var facing_left: bool = false
+
+var heavy_attack_timer: float = 0.0
+var taunt_timer: float = 0.0
+
+var health: int = 400:
 	set(value):
-		health = value
-		progress_bar.value = value
-		if value <= 0:
-			progress_bar.visible = false
-			find_child("FiniteStateMachine").change_state("Death")
+		health = clamp(value, 0, max_health)
+		if progress_bar:
+			progress_bar.max_value = max_health
+			progress_bar.value = health
+		if health <= 0:
+			die()
 
 func _ready():
-	set_physics_process(false)
+	add_to_group("enemy")
+	health = max_health
+	if progress_bar:
+		progress_bar.max_value = max_health
+		progress_bar.value = health
 
+func _physics_process(delta: float):
+	if heavy_attack_timer > 0.0:
+		heavy_attack_timer -= delta
+	if taunt_timer > 0.0:
+		taunt_timer -= delta
 
-func _process(_delta):
-	direction = player.position - position
-	
-	if direction.x < 0:
-		animated_sprite.flip_h = true
+	if not is_on_floor():
+		velocity.y += 1200.0 * delta
+
+	if not player or not is_instance_valid(player):
+		player = get_parent().find_child("player")
+		if not player and get_tree():
+			player = get_tree().get_first_node_in_group("player")
+
+	if player and is_instance_valid(player):
+		direction = player.global_position - global_position
+		# Only update facing direction when NOT performing a special move / action
+		if abs(direction.x) > 5.0 and fsm and fsm.current_state and (fsm.current_state.name == "idle" or fsm.current_state.name == "follow"):
+			facing_left = (direction.x < 0)
+			if anim:
+				anim.flip_h = facing_left
+
+func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, force: float = 0.0):
+	if health <= 0:
+		return
+	health -= amount
+
+	if source_position != Vector2.ZERO and force > 0:
+		var knockback_dir = sign(global_position.x - source_position.x)
+		if knockback_dir == 0:
+			knockback_dir = 1
+		velocity.x = knockback_dir * force * 0.3
+
+	if anim:
+		anim.modulate = Color(4.0, 0.4, 0.4, 1.0)
+		var timer = get_tree().create_timer(0.12)
+		timer.timeout.connect(func(): if is_instance_valid(anim): anim.modulate = Color(1, 1, 1, 1))
+
+func die():
+	if progress_bar:
+		progress_bar.visible = false
+	if fsm:
+		fsm.change_state("death")
 	else:
-		animated_sprite.flip_h = false
-
-func _physics_process(delta):
-	velocity = direction.normalized() * 40
-	move_and_collide(velocity * delta)
-
-func take_damage():
-	health -= 2
+		boss_died.emit()
+		queue_free()

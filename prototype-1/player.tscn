@@ -663,7 +663,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_htija")
 }],
-"loop": false,
+"loop": true,
 "name": &"movement",
 "speed": 15.0
 }, {
@@ -736,9 +736,8 @@ texture_filter = 1
 position = Vector2(-2.000001, -11)
 scale = Vector2(1.7, 1.7)
 sprite_frames = SubResource("SpriteFrames_hiqhm")
-animation = &"attack1"
-frame = 3
-frame_progress = 1.0
+animation = &"movement"
+frame_progress = 0.8648641
 metadata/_edit_lock_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1146786898]

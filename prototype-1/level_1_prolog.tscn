@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dm1kutans8nfl" path="res://level_1_prolog.gd" id="1_gp6hd"]
 [ext_resource type="Texture2D" uid="uid://rkpphv33gkcx" path="res://4 parallax map/PNG/Battleground2/Bright/Battleground2.png" id="2_3jc4g"]
-[ext_resource type="PackedScene" uid="uid://2w8lhpb8ywha" path="res://level_1.tscn" id="2_gp6hd"]
+[ext_resource type="PackedScene" uid="uid://bttwc1oyjhcsg" path="res://background.tscn" id="2_p8qdj"]
 [ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="2_pio57"]
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="3_pio57"]
 [ext_resource type="Texture2D" uid="uid://cvvyg65tp1iqw" path="res://Gemini_Generated_Image_tp41t6tp41t6tp41-04afa54b-f54c-4b84-ac47-7b3ea5a50f3e.jpg" id="4_bnmub"]
@@ -58,7 +58,7 @@ size = Vector2(94.5, 932)
 
 [node name="level1prolog" type="Node2D" unique_id=1634577227]
 script = ExtResource("1_gp6hd")
-next_level = ExtResource("2_gp6hd")
+next_level = ExtResource("2_p8qdj")
 
 [node name="kingcrownbg" type="Sprite2D" parent="." unique_id=785930921]
 texture_filter = 1

@@ -1,24 +1,34 @@
 extends Node2D
-@export var next_level:PackedScene
+@export var next_level: PackedScene
 
+@onready var boss = $Boss1
+@onready var exit_area = $DetectionArea if has_node("DetectionArea") else null
 
-# Called when the node enters the scene tree for the first time.
+var boss_defeated: bool = false
+
 func _ready() -> void:
-	pass
+	if exit_area:
+		exit_area.monitoring = false
+		exit_area.visible = false
+	if boss:
+		boss.boss_died.connect(_on_boss_died)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
-
-
-
-
+func _on_boss_died() -> void:
+	print("Boss1 defeated! Transitioning to next level in 10 seconds...")
+	boss_defeated = true
+	if exit_area:
+		exit_area.monitoring = true
+		exit_area.visible = true
+	
+	var timer = get_tree().create_timer(10.0)
+	await timer.timeout
+	
+	if next_level:
+		get_tree().change_scene_to_packed.call_deferred(next_level)
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	get_tree().change_scene_to_packed.call_deferred(next_level)
+	if next_level:
+		get_tree().change_scene_to_packed.call_deferred(next_level)
 
-
-func _on_detection_area_body_exited(body: Node2D) -> void:
+func _on_detection_area_body_exited(_body: Node2D) -> void:
 	print("area exited")
