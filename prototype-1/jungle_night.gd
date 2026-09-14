@@ -16,7 +16,11 @@ func _process(_delta: float) -> void:
 
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	get_tree().change_scene_to_packed.call_deferred(next_level)
+	if next_level:
+		if SceneTransition:
+			SceneTransition.change_scene_packed(next_level, 0.5)
+		else:
+			get_tree().change_scene_to_packed.call_deferred(next_level)
 	print("body enter")
 
 func _on_detection_area_body_exited(body: Node2D) -> void:

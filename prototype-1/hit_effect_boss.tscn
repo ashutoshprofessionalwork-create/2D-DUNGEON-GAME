@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://djvwmxjm4ihch"]
+
+[ext_resource type="Script" uid="uid://le60kvnrn2do" path="res://hit_effect.gd" id="1_bossbloodeffect"]
+
+[node name="HitEffectBoss" type="CPUParticles2D" unique_id=2083921822]
+amount = 80
+lifetime = 0.45
+explosiveness = 0.85
+randomness = 0.5
+fixed_fps = 60
+spread = 180.0
+gravity = Vector2(0, 600)
+initial_velocity_min = 220.0
+initial_velocity_max = 350.0
+scale_amount_min = 2.5
+scale_amount_max = 5.5
+color = Color(0.85, 0.02, 0.02, 1)
+script = ExtResource("1_bossbloodeffect")

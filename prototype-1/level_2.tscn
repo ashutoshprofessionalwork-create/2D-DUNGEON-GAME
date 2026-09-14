@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://bfcjowuoqs16c" path="res://Parallax_Backgrounds_Cave/1.png" id="6_s77qv"]
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="11_eoq84"]
 [ext_resource type="PackedScene" uid="uid://cgct8ku32ofyt" path="res://spawner.tscn" id="11_yl73a"]
-[ext_resource type="PackedScene" uid="uid://cg3w6xh8plqxc" path="res://scoripian.tscn" id="12_yl73a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eoq84"]
 texture = ExtResource("3_15wb7")
@@ -429,9 +428,6 @@ position = Vector2(24.28571, -42.85714)
 zoom = Vector2(3, 3)
 
 [node name="spawner" parent="." unique_id=282977003 instance=ExtResource("11_yl73a")]
-
-[node name="scoripian" parent="." unique_id=1731859937 instance=ExtResource("12_yl73a")]
-position = Vector2(255, -3)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1657851963]
 position = Vector2(-450, 614)

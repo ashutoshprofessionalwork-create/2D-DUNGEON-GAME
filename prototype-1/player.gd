@@ -69,7 +69,7 @@ func _ready():
 		JUMP_VELOCITY = -500
 		ROLL_SPEED = 1200
 		attack_damage = 10
-		attack_range = 280.0
+		attack_range = 380.0
 		scale=Vector2(3,3)
 		
 	elif level_name == "level2":
@@ -226,7 +226,10 @@ func take_damage(amount):
 		sfx_death.play()
 		
 		await anim.animation_finished
-		get_tree().change_scene_to_file("res://deathmenu.tscn")
+		if SceneTransition:
+			SceneTransition.change_scene_file("res://deathmenu.tscn", 0.5)
+		else:
+			get_tree().change_scene_to_file("res://deathmenu.tscn")
 
 func heal(amount: float) -> void:
 	health = min(health + amount, 100)
@@ -236,4 +239,7 @@ func heal(amount: float) -> void:
 	
 func check_out_of_bounds():
 	if position.y > void_dist:
-		get_tree().change_scene_to_file("res://deathmenu.tscn") # Put your scene path here
+		if SceneTransition:
+			SceneTransition.change_scene_file("res://deathmenu.tscn", 0.5)
+		else:
+			get_tree().change_scene_to_file("res://deathmenu.tscn")

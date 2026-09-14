@@ -11,6 +11,9 @@ func _on_restart_pressed() -> void:
 	bgpress.play()
 	await bgpress.finished
 	
-	var error = get_tree().change_scene_to_file("res://loading.tscn")
-	if error != OK:
-		print(error)
+	if SceneTransition:
+		SceneTransition.change_scene_file("res://loading.tscn", 0.5)
+	else:
+		var error = get_tree().change_scene_to_file("res://loading.tscn")
+		if error != OK:
+			print(error)

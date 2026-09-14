@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 Global="*uid://l0ki2j1pn5c1"
 ScoreManager="*uid://d4gibioc3drqy"
+SceneTransition="*res://scenetransition.tscn"
 
 [display]
 

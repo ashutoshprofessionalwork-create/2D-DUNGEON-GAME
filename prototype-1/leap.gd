@@ -29,17 +29,11 @@ func enter():
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("leap"):
 		anim.play("leap")
 		
-		var start_x = owner.global_position.x
-		var duration = 0.6
-		var elapsed = 0.0
-		
-		while elapsed < duration and is_leaping:
-			if owner.health <= 0:
-				return
+		# Wait until frame 20 (land / hammer slam impact frame)
+		while is_leaping and anim.animation == "leap" and anim.frame < 20:
 			var delta_t = get_physics_process_delta_time()
-			elapsed += delta_t
-			var progress = clamp(elapsed / duration, 0.0, 1.0)
-			owner.global_position.x = lerp(start_x, target_land_x, progress)
+			# Progress movement towards target landing X
+			owner.global_position.x = lerp(owner.global_position.x, target_land_x, delta_t * 8.0)
 			await get_tree().process_frame
 
 		if owner.health <= 0:
@@ -59,8 +53,8 @@ func enter():
 			if owner.player.has_method("take_damage"):
 				owner.player.take_damage(owner.leap_damage)
 
-	if owner.is_inside_tree() and owner.get_tree():
-		await owner.get_tree().create_timer(0.2).timeout
+	if anim and anim.is_playing() and anim.animation == "leap":
+		await anim.animation_finished
 	if owner.health <= 0:
 		return
 

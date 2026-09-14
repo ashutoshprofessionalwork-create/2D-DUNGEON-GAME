@@ -32,23 +32,29 @@ func enter():
 	elif anim:
 		anim.play("attack")
 
-	# Heavy Attack strike timing
-	if owner.is_inside_tree() and owner.get_tree():
-		await owner.get_tree().create_timer(0.35).timeout
-	if owner.health <= 0:
+	# Wait until frame 12 (when heavy swing impacts)
+	if anim:
+		var target_anim = "attack1" if anim.sprite_frames and anim.sprite_frames.has_animation("attack1") else "attack"
+		while is_attacking and anim.animation == target_anim and anim.frame < 12:
+			await owner.get_tree().process_frame
+	if not is_attacking or owner.health <= 0:
 		return
 
 	remove_warning_indicator()
 
 	# Deal heavy damage
 	if owner.health > 0 and owner.player and is_instance_valid(owner.player):
-		var dist = abs(owner.player.global_position.x - owner.global_position.x)
-		if dist <= owner.heavy_attack_range:
+		var diff_x = owner.player.global_position.x - owner.global_position.x
+		var facing_left = anim.flip_h if anim else owner.facing_left
+		var player_in_front = (facing_left and diff_x <= 0) or (not facing_left and diff_x >= 0)
+
+		if player_in_front and abs(diff_x) <= owner.heavy_attack_range:
 			if owner.player.has_method("take_damage"):
 				owner.player.take_damage(owner.heavy_attack_damage)
 
-	if owner.is_inside_tree() and owner.get_tree():
-		await owner.get_tree().create_timer(0.4).timeout
+	# Wait for animation to finish before leaving state
+	if anim and anim.is_playing():
+		await anim.animation_finished
 	if owner.health <= 0:
 		return
 

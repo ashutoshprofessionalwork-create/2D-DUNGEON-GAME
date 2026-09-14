@@ -19,8 +19,9 @@ func _process(delta: float) -> void:
 	if is_collected or not is_instance_valid(player) or player.get("is_dead"):
 		return
 
-	# 1. Magnetize smoothly towards the player
-	global_position = global_position.move_toward(player.global_position, magnet_speed * delta)
+	# 1. Magnetize smoothly towards the player if magnet_speed is configured (>0)
+	if magnet_speed > 0.0:
+		global_position = global_position.move_toward(player.global_position, magnet_speed * delta)
 
 	# 2. Hardcoded Distance Check bypasses broken collision signals completely
 	if global_position.distance_to(player.global_position) <= pickup_distance:

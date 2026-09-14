@@ -14,6 +14,7 @@ signal boss_died
 @export var heavy_attack_cooldown: float = 8.0
 
 @export var taunt_cooldown: float = 6.0
+@export var hit_effect_scene: PackedScene = preload("res://hit_effect_boss.tscn")
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
@@ -24,8 +25,12 @@ var player: Node2D = null
 var direction: Vector2 = Vector2.ZERO
 var facing_left: bool = false
 
+@export var leap_damage: int = 25
+@export var leap_cooldown: float = 10.0
+
 var heavy_attack_timer: float = 0.0
 var taunt_timer: float = 0.0
+var leap_timer: float = 0.0
 
 var health: int = 400:
 	set(value):
@@ -48,6 +53,8 @@ func _physics_process(delta: float):
 		heavy_attack_timer -= delta
 	if taunt_timer > 0.0:
 		taunt_timer -= delta
+	if leap_timer > 0.0:
+		leap_timer -= delta
 
 	if not is_on_floor():
 		velocity.y += 1200.0 * delta
@@ -75,6 +82,11 @@ func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, forc
 		if knockback_dir == 0:
 			knockback_dir = 1
 		velocity.x = knockback_dir * force * 0.3
+
+	if hit_effect_scene:
+		var effect = hit_effect_scene.instantiate()
+		effect.global_position = global_position
+		get_tree().current_scene.add_child(effect)
 
 	if anim:
 		anim.modulate = Color(4.0, 0.4, 0.4, 1.0)

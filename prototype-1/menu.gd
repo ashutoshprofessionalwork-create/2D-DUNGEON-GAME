@@ -30,12 +30,10 @@ func _on_start_pressed() -> void:
 	await bgpress.finished
 	
 	button_type = "start"
-	$fadetransition.show()
-	$fadetransition/Timer.start()
-	
-	# Use safer node check for your AnimationPlayer child
-	if $fadetransition.has_node("AnimationPlayer"):
-		$fadetransition/AnimationPlayer.play("fade_in")
+	if SceneTransition:
+		SceneTransition.change_scene_file("res://loading.tscn", 0.5)
+	else:
+		get_tree().change_scene_to_file("res://loading.tscn")
 
 func _on_quit_pressed() -> void:
 	button_type = "quit"
