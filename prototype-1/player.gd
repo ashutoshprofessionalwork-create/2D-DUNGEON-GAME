@@ -23,7 +23,9 @@ enum State { IDLE, MOVE, JUMP, ROLL, ATTACK, DEATH }
 var current_state = State.IDLE
 var facing_direction = 1
 
-var combo_cooldown_timer = 0.0
+const ROLL_COOLDOWN_TIME = 1.5
+var roll_cooldown_timer = 0.0
+var combo_cooldown_timer=1.5
 
 func _ready():
 	add_to_group("player")
@@ -76,7 +78,7 @@ func _ready():
 		attack_range = 80.0
 		SPEED = 200
 		JUMP_VELOCITY = -300.0
-		ROLL_SPEED = 220
+		ROLL_SPEED = 300
 		void_dist=200
 		
 
@@ -93,6 +95,8 @@ func _physics_process(delta):
 
 	if combo_cooldown_timer > 0.0:
 		combo_cooldown_timer -= delta
+	if roll_cooldown_timer > 0.0:
+		roll_cooldown_timer -= delta
 
 	match current_state:
 		State.IDLE, State.MOVE, State.JUMP:
@@ -134,9 +138,13 @@ func handle_movement(delta):
 
 func handle_actions():
 	if Input.is_action_just_pressed("roll") and is_on_floor():
-		current_state = State.ROLL
-		anim.play("roll")
-		roll()
+		if roll_cooldown_timer <= 0.0:
+			current_state = State.ROLL
+			roll_cooldown_timer = ROLL_COOLDOWN_TIME
+			anim.play("roll")
+			roll()
+		else:
+			print("Roll is on cooldown!")
 		
 	elif Input.is_action_just_pressed("attack1") and is_on_floor():
 		current_state = State.ATTACK
@@ -163,8 +171,11 @@ func handle_roll(delta):
 func roll():
 	set_collision_mask_value(3, false)
 	set_collision_layer_value(2, false)
+	
 	await get_tree().create_timer(0.5).timeout
-	set_collision_layer_value(2, false)
+	
+	set_collision_layer_value(2, true)
+
 	set_collision_mask_value(3, true)
 
 func handle_attack(delta):

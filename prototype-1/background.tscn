@@ -8,6 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cgct8ku32ofyt" path="res://spawner.tscn" id="5_eq6nc"]
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="6_bpugw"]
 [ext_resource type="Script" uid="uid://2oyq0vnqy1nk" path="res://enemy_spawn_info.gd" id="8_vvxqx"]
+[ext_resource type="PackedScene" uid="uid://cg3w6xh8plqxc" path="res://scoripian.tscn" id="9_b3bg0"]
+[ext_resource type="PackedScene" uid="uid://cupcxw75tbjvf" path="res://hit_effect_orange.tscn" id="10_8umsc"]
+[ext_resource type="PackedScene" uid="uid://c44wvoahl82x4" path="res://snake.tscn" id="11_7kmkt"]
+[ext_resource type="PackedScene" uid="uid://cusggwh1k0l2c" path="res://hit_effect.tscn" id="12_livpj"]
+[ext_resource type="PackedScene" uid="uid://c66egd8dsr5a1" path="res://hyena.tscn" id="13_v7pi8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eq6nc"]
 texture = ExtResource("2_xehqc")
@@ -1390,13 +1395,27 @@ distance = -300.0
 
 [sub_resource type="Resource" id="Resource_cdpnt"]
 script = ExtResource("8_vvxqx")
+enemy_scene = ExtResource("9_b3bg0")
+hit_effect_scene = ExtResource("10_8umsc")
+metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
+
+[sub_resource type="Resource" id="Resource_bho85"]
+script = ExtResource("8_vvxqx")
+enemy_scene = ExtResource("11_7kmkt")
+hit_effect_scene = ExtResource("12_livpj")
+metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
+
+[sub_resource type="Resource" id="Resource_nk35r"]
+script = ExtResource("8_vvxqx")
+enemy_scene = ExtResource("13_v7pi8")
+hit_effect_scene = ExtResource("12_livpj")
 metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eq6nc"]
 size = Vector2(1309, 232)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvxqx"]
-size = Vector2(214.25, 932)
+size = Vector2(1597.125, 932)
 
 [node name="jungle" type="Node2D" unique_id=910605102]
 position = Vector2(-3, 0)
@@ -1471,7 +1490,7 @@ shape = SubResource("WorldBoundaryShape2D_eq6nc")
 
 [node name="spawner" parent="." unique_id=282977003 instance=ExtResource("5_eq6nc")]
 position = Vector2(0, 100)
-spawn_list = Array[ExtResource("8_vvxqx")]([SubResource("Resource_cdpnt")])
+spawn_list = Array[ExtResource("8_vvxqx")]([SubResource("Resource_cdpnt"), SubResource("Resource_bho85"), SubResource("Resource_nk35r")])
 base_spawn_time = 3.0
 metadata/_edit_lock_ = true
 
@@ -1489,7 +1508,7 @@ collision_layer = 0
 collision_mask = 130
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1063950254]
-position = Vector2(14354, -27)
+position = Vector2(18995, -68)
 shape = SubResource("RectangleShape2D_vvxqx")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

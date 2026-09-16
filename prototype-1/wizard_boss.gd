@@ -1,0 +1,134 @@
+class_name WizardBoss
+extends CharacterBody2D
+
+signal boss_died
+
+@export var max_health: int = 400
+@export var speed: float = 160.0
+@export var attack_damage: int = 20
+@export var attack_range: float = 70.0
+@export var detection_range: float = 3000.0
+
+@export var heavy_attack_damage: int = 45
+@export var heavy_attack_range: float = 80.0
+@export var heavy_attack_cooldown: float = 8.0
+
+@export var teleport_cooldown: float = 5.0
+@export var preferred_distance: float = 180.0
+
+@export var taunt_cooldown: float = 6.0
+@export var hit_effect_scene: PackedScene = preload("res://hit_effect_boss.tscn")
+
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision: CollisionShape2D = $CollisionShape2D
+@onready var fsm = $FiniteStateMachine
+@onready var progress_bar = $UI/ProgressBar if has_node("UI/ProgressBar") else null
+
+var player: Node2D = null
+var direction: Vector2 = Vector2.ZERO
+var facing_left: bool = false
+
+@export var leap_damage: int = 25
+@export var leap_cooldown: float = 10.0
+
+var heavy_attack_timer: float = 0.0
+var taunt_timer: float = 0.0
+var leap_timer: float = 0.0
+var teleport_timer: float = 0.0
+
+# Vulnerability & Stagger Mechanics
+var is_casting: bool = false
+var is_staggered: bool = false
+var is_teleporting: bool = false
+
+var health: int = 400:
+	set(value):
+		health = clamp(value, 0, max_health)
+		if progress_bar:
+			progress_bar.max_value = max_health
+			progress_bar.value = health
+		if health <= 0:
+			die()
+
+func _ready():
+	add_to_group("enemy")
+	health = max_health
+	if progress_bar:
+		progress_bar.max_value = max_health
+		progress_bar.value = health
+
+func _physics_process(delta: float):
+	if heavy_attack_timer > 0.0:
+		heavy_attack_timer -= delta
+	if taunt_timer > 0.0:
+		taunt_timer -= delta
+	if leap_timer > 0.0:
+		leap_timer -= delta
+	if teleport_timer > 0.0:
+		teleport_timer -= delta
+
+	if not is_on_floor():
+		velocity.y += 1200.0 * delta
+
+	if not player or not is_instance_valid(player):
+		player = get_parent().find_child("player")
+		if not player and get_tree():
+			player = get_tree().get_first_node_in_group("player")
+
+	if player and is_instance_valid(player):
+		direction = player.global_position - global_position
+		if abs(direction.x) > 5.0 and fsm and fsm.current_state and (fsm.current_state.name == "idle" or fsm.current_state.name == "follow"):
+			facing_left = (direction.x < 0)
+			if anim:
+				anim.flip_h = facing_left
+
+func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, force: float = 0.0):
+	if health <= 0:
+		return
+	
+	# Interrupt spellcasting if hit during heavy attack cast
+	if is_casting and not is_staggered:
+		amount = int(amount * 1.5)
+		stagger_boss()
+
+	health -= amount
+
+	if source_position != Vector2.ZERO and force > 0:
+		var knockback_dir = sign(global_position.x - source_position.x)
+		if knockback_dir == 0:
+			knockback_dir = 1
+		velocity.x = knockback_dir * force * 0.3
+
+	if hit_effect_scene:
+		var effect = hit_effect_scene.instantiate()
+		effect.global_position = global_position
+		get_tree().current_scene.add_child(effect)
+
+	if anim and not is_staggered:
+		anim.modulate = Color(4.0, 0.4, 0.4, 1.0)
+		var timer = get_tree().create_timer(0.12)
+		timer.timeout.connect(func(): if is_instance_valid(anim) and not is_staggered: anim.modulate = Color(1, 1, 1, 1))
+
+func stagger_boss():
+	is_staggered = true
+	is_casting = false
+	if anim:
+		anim.modulate = Color(0.3, 0.6, 1.0, 1.0)
+	if fsm:
+		fsm.change_state("taunt")
+	
+	var timer = get_tree().create_timer(1.2)
+	timer.timeout.connect(func():
+		is_staggered = false
+		if is_instance_valid(anim):
+			anim.modulate = Color(1, 1, 1, 1)
+	)
+
+func die():
+	if progress_bar:
+		progress_bar.visible = false
+	if fsm:
+		fsm.change_state("death")
+	else:
+		boss_died.emit()
+		queue_free()

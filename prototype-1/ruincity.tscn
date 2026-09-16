@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dnk4kh023mcka" path="res://ruincity.gd" id="1_4xqxw"]
 [ext_resource type="Texture2D" uid="uid://bnx4iknaskk8o" path="res://ruincity/PNG/War1/Bright/War.png" id="2_4xqxw"]
+[ext_resource type="PackedScene" uid="uid://dbc6h3fwrkukc" path="res://level_2.tscn" id="2_nqsvg"]
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="4_3itbr"]
 [ext_resource type="Texture2D" uid="uid://cq5ot5tmjkt75" path="res://Tileset.png" id="5_hu0wr"]
 [ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="6_mqhm1"]
@@ -1418,6 +1419,7 @@ size = Vector2(214.25, 932)
 [node name="ruincity" type="Node2D" unique_id=910605102]
 position = Vector2(-3, 0)
 script = ExtResource("1_4xqxw")
+next_level = ExtResource("2_nqsvg")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1952279514]
 

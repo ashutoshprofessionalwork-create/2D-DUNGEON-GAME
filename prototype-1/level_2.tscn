@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://532u53kbuwxi" path="res://Parallax_Backgrounds_Cave/3.png" id="5_xbcdb"]
 [ext_resource type="Texture2D" uid="uid://hvk6probdlmp" path="res://Parallax_Backgrounds_Cave/2.png" id="6_15wb7"]
 [ext_resource type="Texture2D" uid="uid://bfcjowuoqs16c" path="res://Parallax_Backgrounds_Cave/1.png" id="6_s77qv"]
+[ext_resource type="PackedScene" uid="uid://bqbv4740uakd6" path="res://wizard.tscn" id="8_xbcdb"]
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="11_eoq84"]
 [ext_resource type="PackedScene" uid="uid://cgct8ku32ofyt" path="res://spawner.tscn" id="11_yl73a"]
 
@@ -404,6 +405,9 @@ metadata/_edit_lock_ = true
 texture_filter = 1
 position = Vector2(384, 0)
 texture = ExtResource("6_s77qv")
+
+[node name="wizard" parent="." unique_id=1093747868 instance=ExtResource("8_xbcdb")]
+position = Vector2(433, -21)
 
 [node name="TileMap" type="TileMap" parent="." unique_id=1168729931]
 tile_set = SubResource("TileSet_yl73a")

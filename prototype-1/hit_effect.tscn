@@ -4,10 +4,9 @@
 
 [node name="HitEffect" type="CPUParticles2D" unique_id=1998256127]
 amount = 40
-lifetime = 0.32
-explosiveness = 0.39
-randomness = 0.28
-fixed_fps = 60
+lifetime = 0.75
+explosiveness = 0.75
+randomness = 0.42
 spread = 180.0
 gravity = Vector2(0, 400)
 initial_velocity_min = 151.69
