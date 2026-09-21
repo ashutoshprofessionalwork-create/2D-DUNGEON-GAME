@@ -60,7 +60,7 @@ func _physics_process(delta: float):
 		velocity.y += 1200.0 * delta
 
 	if not player or not is_instance_valid(player):
-		player = get_parent().find_child("player")
+		player = get_parent().find_child("player") if get_parent() else null
 		if not player and get_tree():
 			player = get_tree().get_first_node_in_group("player")
 
@@ -83,12 +83,12 @@ func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, forc
 			knockback_dir = 1
 		velocity.x = knockback_dir * force * 0.3
 
-	if hit_effect_scene:
+	if hit_effect_scene and get_tree() and get_tree().current_scene:
 		var effect = hit_effect_scene.instantiate()
 		effect.global_position = global_position
 		get_tree().current_scene.add_child(effect)
 
-	if anim:
+	if anim and get_tree():
 		anim.modulate = Color(4.0, 0.4, 0.4, 1.0)
 		var timer = get_tree().create_timer(0.12)
 		timer.timeout.connect(func(): if is_instance_valid(anim): anim.modulate = Color(1, 1, 1, 1))
@@ -96,8 +96,9 @@ func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, forc
 func die():
 	if progress_bar:
 		progress_bar.visible = false
-	if fsm:
-		fsm.change_state("death")
+	var state_machine = fsm if fsm else get_node_or_null("FiniteStateMachine")
+	if state_machine:
+		state_machine.change_state("death")
 	else:
 		boss_died.emit()
 		queue_free()

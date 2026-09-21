@@ -4,6 +4,8 @@ extends State
 
 func enter():
 	super.enter()
+	if not anim:
+		anim = owner.get_node_or_null("AnimatedSprite2D")
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("walk"):
 		anim.play("walk")
 
@@ -20,12 +22,12 @@ func physics_update(_delta: float):
 			# Too close! Back away slowly
 			owner.facing_left = (dir_x < 0)
 			if anim:
-				anim.flip_h = owner.facing_left
+				anim.flip_h = not owner.facing_left if owner is RuinCityBoss else owner.facing_left
 			owner.velocity.x = (owner.speed * 0.8 if owner.facing_left else -owner.speed * 0.8)
 		elif abs(dir_x) > 5.0:
 			owner.facing_left = (dir_x < 0)
 			if anim:
-				anim.flip_h = owner.facing_left
+				anim.flip_h = not owner.facing_left if owner is RuinCityBoss else owner.facing_left
 			owner.velocity.x = (-owner.speed if owner.facing_left else owner.speed)
 	
 	owner.move_and_slide()
@@ -38,20 +40,25 @@ func transition():
 	var horiz_dist = abs(owner.player.global_position.x - owner.global_position.x)
 	
 	# Teleport away if player gets too close and teleport is off cooldown
-	if horiz_dist < 90.0 and owner.teleport_timer <= 0.0:
+	if "teleport_timer" in owner and owner.teleport_timer <= 0.0:
 		perform_teleport()
 		return
 
-	if owner.heavy_attack_timer <= 0.0 and horiz_dist <= owner.heavy_attack_range:
+	# Rock throw phase for Ruin City Boss when at distance or on cooldown roll
+	if "rock_throw_timer" in owner and owner.rock_throw_timer <= 0.0 and horiz_dist >= 220.0 and horiz_dist <= 1000.0:
+		get_parent().change_state("rock_throw")
+		return
+
+	if "heavy_attack_timer" in owner and owner.heavy_attack_timer <= 0.0 and horiz_dist <= owner.heavy_attack_range:
 		get_parent().change_state("heavy_attack")
 	elif horiz_dist <= owner.attack_range:
 		get_parent().change_state("attack")
-	elif owner.taunt_timer <= 0.0 and horiz_dist >= 300.0 and owner.is_on_floor():
-		get_parent().change_state("taunt")
 	elif horiz_dist > owner.detection_range:
 		get_parent().change_state("idle")
 
 func perform_teleport():
+	if not "teleport_cooldown" in owner:
+		return
 	owner.teleport_timer = owner.teleport_cooldown
 	if anim:
 		anim.modulate = Color(0.8, 0.2, 1.0, 0.3) # Purple fade out

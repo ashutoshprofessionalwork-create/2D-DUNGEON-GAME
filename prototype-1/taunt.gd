@@ -5,6 +5,8 @@ var is_taunting: bool = false
 
 func enter():
 	super.enter()
+	if not anim:
+		anim = owner.get_node_or_null("AnimatedSprite2D")
 	is_taunting = true
 	owner.taunt_timer = owner.taunt_cooldown
 	owner.velocity.x = 0
@@ -14,7 +16,7 @@ func enter():
 
 	if owner.is_inside_tree() and owner.get_tree():
 		await owner.get_tree().create_timer(1.2).timeout
-	else:
+	elif anim and anim.is_playing():
 		await anim.animation_finished
 
 	if owner.health <= 0:

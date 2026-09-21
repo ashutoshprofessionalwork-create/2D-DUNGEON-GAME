@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cq5ot5tmjkt75" path="res://Tileset.png" id="5_hu0wr"]
 [ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="6_mqhm1"]
 [ext_resource type="PackedScene" uid="uid://cgct8ku32ofyt" path="res://spawner.tscn" id="7_ux1o3"]
-[ext_resource type="PackedScene" uid="uid://hjwb100vtky6" path="res://zombieruicity.tscn" id="8_7u46h"]
 [ext_resource type="Script" uid="uid://2oyq0vnqy1nk" path="res://enemy_spawn_info.gd" id="8_xxf1j"]
+[ext_resource type="PackedScene" uid="uid://cxky7m7tqmlgj" path="res://ruincity_boss.tscn" id="9_nqsvg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eq6nc"]
 texture = ExtResource("5_hu0wr")
@@ -1509,44 +1509,8 @@ collision_mask = 130
 position = Vector2(14354, -27)
 shape = SubResource("RectangleShape2D_vvxqx")
 
-[node name="zombieruicity" parent="." unique_id=1731859937 instance=ExtResource("8_7u46h")]
-position = Vector2(1699, 240.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity2" parent="." unique_id=21942668 instance=ExtResource("8_7u46h")]
-position = Vector2(1699, 240.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity3" parent="." unique_id=1410041416 instance=ExtResource("8_7u46h")]
-position = Vector2(4437, 229.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity4" parent="." unique_id=2009506649 instance=ExtResource("8_7u46h")]
-position = Vector2(2670, 232.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity5" parent="." unique_id=971507966 instance=ExtResource("8_7u46h")]
-position = Vector2(3289, 204.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity6" parent="." unique_id=1720311436 instance=ExtResource("8_7u46h")]
-position = Vector2(2965, 212.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity7" parent="." unique_id=1751882302 instance=ExtResource("8_7u46h")]
-position = Vector2(2471, 230.00002)
-scale = Vector2(6, 6)
-metadata/_edit_lock_ = true
-
-[node name="zombieruicity8" parent="." unique_id=271868318 instance=ExtResource("8_7u46h")]
-position = Vector2(1978.0001, 224.00002)
-scale = Vector2(6, 6)
+[node name="ruincity_boss" parent="." unique_id=353576630 instance=ExtResource("9_nqsvg")]
+position = Vector2(2723, -32)
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

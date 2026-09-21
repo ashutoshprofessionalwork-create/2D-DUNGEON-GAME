@@ -6,10 +6,13 @@ var indicator: Polygon2D = null
 
 func enter():
 	super.enter()
+	if not anim:
+		anim = owner.get_node_or_null("AnimatedSprite2D")
 	is_attacking = true
 	owner.velocity.x = 0
 	owner.heavy_attack_timer = owner.heavy_attack_cooldown
-	owner.is_casting = true
+	if "is_casting" in owner:
+		owner.is_casting = true
 
 	var direction = -1.0 if owner.facing_left else 1.0
 
@@ -20,13 +23,15 @@ func enter():
 	if owner.is_inside_tree() and owner.get_tree():
 		await owner.get_tree().create_timer(0.5).timeout
 	
-	owner.is_casting = false
+	if "is_casting" in owner:
+		owner.is_casting = false
 
-	if owner.health <= 0 or not owner.is_inside_tree() or owner.is_staggered:
+	var is_staggered = owner.is_staggered if "is_staggered" in owner else false
+	if owner.health <= 0 or not owner.is_inside_tree() or is_staggered:
 		remove_warning_indicator()
 		return
 
-	if anim and not owner.is_staggered:
+	if anim and not is_staggered:
 		anim.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 	var target_anim = "attack1"
@@ -42,7 +47,9 @@ func enter():
 	if anim:
 		while is_attacking and owner.is_inside_tree() and owner.get_tree() and anim.animation == target_anim and anim.frame < 4:
 			await owner.get_tree().process_frame
-	if not is_attacking or owner.health <= 0 or not owner.is_inside_tree() or owner.is_staggered:
+	
+	is_staggered = owner.is_staggered if "is_staggered" in owner else false
+	if not is_attacking or owner.health <= 0 or not owner.is_inside_tree() or is_staggered:
 		remove_warning_indicator()
 		return
 
@@ -74,7 +81,8 @@ func create_warning_indicator(pos: Vector2):
 		Vector2(-40, 12)
 	])
 	indicator.global_position = pos
-	owner.get_parent().add_child(indicator)
+	if owner.get_parent():
+		owner.get_parent().add_child(indicator)
 
 func remove_warning_indicator():
 	if indicator and is_instance_valid(indicator):
@@ -90,12 +98,15 @@ func physics_update(_delta: float):
 func exit():
 	super.exit()
 	remove_warning_indicator()
-	owner.is_casting = false
-	if anim and not owner.is_staggered:
+	if "is_casting" in owner:
+		owner.is_casting = false
+	var is_staggered = owner.is_staggered if "is_staggered" in owner else false
+	if anim and not is_staggered:
 		anim.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 func transition():
 	if owner.health <= 0:
 		return
-	if not is_attacking or owner.is_staggered:
+	var is_staggered = owner.is_staggered if "is_staggered" in owner else false
+	if not is_attacking or is_staggered:
 		get_parent().change_state("follow")

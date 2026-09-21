@@ -4,6 +4,8 @@ extends State
 
 func enter():
 	super.enter()
+	if not anim:
+		anim = owner.get_node_or_null("AnimatedSprite2D")
 	owner.velocity = Vector2.ZERO
 	if owner.progress_bar:
 		owner.progress_bar.visible = false

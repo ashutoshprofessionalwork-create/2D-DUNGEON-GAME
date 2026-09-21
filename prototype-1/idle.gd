@@ -4,6 +4,8 @@ extends State
 
 func enter():
 	super.enter()
+	if not anim:
+		anim = owner.get_node_or_null("AnimatedSprite2D")
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("idle"):
 		anim.play("idle")
 

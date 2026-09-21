@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://ceegyh6bhawcs"]
+
+[ext_resource type="Script" path="res://rock_projectile.gd" id="1_rock_script"]
+[ext_resource type="Texture2D" path="res://ruincity/PNG/War3/Bright/bricks1.png" id="2_rock_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rock"]
+radius = 16.0
+
+[node name="RockProjectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_rock_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_rock_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rock")

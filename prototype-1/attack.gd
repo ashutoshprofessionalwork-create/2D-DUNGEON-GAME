@@ -6,6 +6,8 @@ var attack_count = 0
 
 func enter():
 	super.enter()
+	if not anim:
+		anim = owner.get_node_or_null("AnimatedSprite2D")
 	is_attacking = true
 	owner.velocity.x = 0
 	
@@ -14,12 +16,6 @@ func enter():
 	# 1. First Attack Animation ("attack")
 	if anim and anim.sprite_frames and anim.sprite_frames.has_animation("attack"):
 		anim.play("attack")
-		attack_count += 1
-		if attack_count >= 3:
-			attack_count = 0
-			if anim.sprite_frames.has_animation("taunt"):
-				anim.play("taunt")
-				await anim.animation_finished
 
 	# Wait until frame 4 or animation completion
 	if anim and anim.is_playing() and anim.animation == "attack":
@@ -71,14 +67,15 @@ func face_target():
 		var diff = owner.player.global_position.x - owner.global_position.x
 		if diff != 0:
 			if anim:
-				anim.flip_h = diff < 0
+				var facing_left = diff < 0
+				anim.flip_h = not facing_left if owner is RuinCityBoss else facing_left
 
 func deal_damage_if_in_range():
 	if owner.health <= 0:
 		return
 	if owner.player and is_instance_valid(owner.player):
 		var diff_x = owner.player.global_position.x - owner.global_position.x
-		var facing_left = anim.flip_h if anim else owner.facing_left
+		var facing_left = (not anim.flip_h) if (owner is RuinCityBoss and anim) else (anim.flip_h if anim else owner.facing_left)
 		var player_in_front = (facing_left and diff_x <= 0) or (not facing_left and diff_x >= 0)
 		
 		if player_in_front and abs(diff_x) <= owner.attack_range + 50.0:
