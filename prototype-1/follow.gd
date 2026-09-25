@@ -30,7 +30,10 @@ func physics_update(_delta: float):
 				anim.flip_h = not owner.facing_left if owner is RuinCityBoss else owner.facing_left
 			owner.velocity.x = (-owner.speed if owner.facing_left else owner.speed)
 	
-	owner.move_and_slide()
+	if owner.has_method("safe_move_and_slide"):
+		owner.safe_move_and_slide()
+	else:
+		owner.move_and_slide()
 
 func transition():
 	if not owner.player or not is_instance_valid(owner.player):

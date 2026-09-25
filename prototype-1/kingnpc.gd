@@ -16,7 +16,7 @@ func _process(_delta):
 		
 	# ONLY allow interaction if the player is actually in the zone
 	if Input.is_action_just_pressed("interact") and player_in_chat_zone:
-		$dialogchat.visible=true
+		$dialogchat.visible = true
 		$dialogchat.start()
 		is_chatting = true
 		$AnimatedSprite2D.play("chat")
@@ -32,4 +32,5 @@ func _on_chat_detection_area_body_exited(body: Node2D) -> void:
 	
 func _on_dialogchat_dialog_finished() -> void:
 	is_chatting = false
-	$dialogchat.visible=false
+	$dialogchat.visible = false
+

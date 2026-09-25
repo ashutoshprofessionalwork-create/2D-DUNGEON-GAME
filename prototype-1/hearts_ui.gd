@@ -1,20 +1,25 @@
 
 extends Control
 
-@onready var sprite = $HeartsSprite
+@onready var health_bar = $HealthBar
+@onready var damage_bar = $DamageBar
+@onready var health_label = $HealthLabel
 
-func update_hearts(current_health: int, _max_health: int):
-	if current_health >= 90:
-		sprite.frame = 0 # 3 full hearts
-	elif current_health >= 75:
-		sprite.frame = 1 # 2.5 hearts
-	elif current_health >= 60:
-		sprite.frame = 2 # 2 hearts
-	elif current_health >= 45:
-		sprite.frame = 3 # 1.5 hearts
-	elif current_health >= 30:
-		sprite.frame = 4 # 1 heart
-	elif current_health >= 15:
-		sprite.frame = 5 # 0.5 heart
-	else:
-		sprite.frame = 6 # 0 hearts (Dead)
+var damage_tween: Tween
+
+func update_hearts(current_health: int, max_health: int):
+	var target_pct = clamp(float(current_health) / float(max_health) * 100.0, 0.0, 100.0)
+	
+	if health_bar:
+		health_bar.value = target_pct
+		
+	if health_label:
+		health_label.text = "HP %d / %d" % [max(0, current_health), max_health]
+		
+	if damage_bar:
+		if damage_tween:
+			damage_tween.kill()
+		damage_tween = create_tween()
+		damage_tween.tween_interval(0.2)
+		damage_tween.tween_property(damage_bar, "value", target_pct, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+

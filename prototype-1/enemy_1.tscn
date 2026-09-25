@@ -220,7 +220,7 @@ animations = [{
 
 [node name="enemy1" type="CharacterBody2D" unique_id=562930992 groups=["enemy"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 1
 script = ExtResource("1_wswjf")
 speed = 200.0
 detection_range = 10000.0

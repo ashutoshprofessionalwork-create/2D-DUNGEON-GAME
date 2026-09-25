@@ -28,7 +28,10 @@ func physics_update(_delta: float):
 	if not owner.is_on_floor():
 		owner.velocity.y += 1200.0 * _delta
 	owner.velocity.x = 0
-	owner.move_and_slide()
+	if owner.has_method("safe_move_and_slide"):
+		owner.safe_move_and_slide()
+	else:
+		owner.move_and_slide()
 
 func transition():
 	if owner.health <= 0:

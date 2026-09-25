@@ -23,6 +23,12 @@ func _ready() -> void:
 	else:
 		push_warning("Zombie: No node found in group 'player'.")
 
+func safe_move_and_slide():
+	if is_nan(velocity.x) or is_nan(velocity.y):
+		velocity = Vector2.ZERO
+	up_direction = Vector2.UP
+	move_and_slide()
+
 func _physics_process(delta: float) -> void:
 	if player:
 		print("Distance to player: ", global_position.distance_to(player.global_position), " | attack_range: ", attack_range)
@@ -30,12 +36,12 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
-		move_and_slide()
+		safe_move_and_slide()
 		return
 
 	if is_attacking:
 		velocity = Vector2.ZERO
-		move_and_slide()
+		safe_move_and_slide()
 		return
 
 	var distance_to_player: float = global_position.distance_to(player.global_position)
@@ -59,7 +65,7 @@ func _physics_process(delta: float) -> void:
 			_flip_towards((player.global_position - global_position).normalized())
 			_try_attack()
 
-	move_and_slide()
+	safe_move_and_slide()
 
 func _set_state(new_state: State) -> void:
 	if current_state == new_state:

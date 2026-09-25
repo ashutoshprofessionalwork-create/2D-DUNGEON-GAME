@@ -202,7 +202,7 @@ animations = [{
 
 [node name="snake" type="CharacterBody2D" unique_id=562930992 groups=["enemy"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 1
 script = ExtResource("1_ej4wj")
 drop_item_scene = ExtResource("2_xox5r")
 

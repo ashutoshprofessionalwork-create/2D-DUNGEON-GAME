@@ -16,6 +16,14 @@ func _ready():
 	if players.size() > 0:
 		player = players[0]
 
+func safe_move_and_slide():
+	if current_state == State.DEAD:
+		return
+	if is_nan(velocity.x) or is_nan(velocity.y):
+		velocity = Vector2.ZERO
+	up_direction = Vector2.UP
+	move_and_slide()
+
 func _physics_process(delta):
 	if current_state == State.DEAD:
 		return
@@ -40,7 +48,7 @@ func _physics_process(delta):
 			current_state = State.IDLE
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	move_and_slide()
+	safe_move_and_slide()
 	update_animations()
 
 func trigger_random_attack():

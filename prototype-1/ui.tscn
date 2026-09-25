@@ -1,28 +1,113 @@
 [gd_scene format=3 uid="uid://cs54ba4361we4"]
 
 [ext_resource type="Script" uid="uid://bl060x38wndvg" path="res://hearts_ui.gd" id="1_m6e0p"]
-[ext_resource type="Texture2D" uid="uid://d3q5cuawvap56" path="res://HealthUI.png" id="2_27fn8"]
 [ext_resource type="Script" uid="uid://bsxfkve5cpktq" path="res://label.gd" id="3_27fn8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.08, 0.08, 0.12, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.15, 0.15, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_damage"]
+bg_color = Color(0.9, 0.25, 0.25, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.2, 0.82, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.1, 0.1, 0.15, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.3, 0.4, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill"]
+bg_color = Color(0.18, 0.72, 0.98, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="UI" type="CanvasLayer" unique_id=614365459]
 
 [node name="HeartsUI" type="Control" parent="." unique_id=433384619]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 325.0
+offset_bottom = 75.0
 script = ExtResource("1_m6e0p")
 
-[node name="HeartsSprite" type="Sprite2D" parent="HeartsUI" unique_id=1857842205]
-texture_filter = 1
-position = Vector2(1000, 80)
-scale = Vector2(3.5, 3.5)
-texture = ExtResource("2_27fn8")
-vframes = 7
+[node name="DamageBar" type="ProgressBar" parent="HeartsUI" unique_id=1280392970]
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 22.0
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_damage")
+value = 100.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="HeartsUI" unique_id=115789791]
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 22.0
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="HeartsUI" unique_id=1875407597]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 1.0
+offset_right = 250.0
+offset_bottom = 21.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 13
+text = "HP 100 / 100"
+vertical_alignment = 1
+
+[node name="RollCooldownBar" type="ProgressBar" parent="." unique_id=198471982]
+offset_left = 25.0
+offset_top = 53.0
+offset_right = 285.0
+offset_bottom = 63.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+value = 100.0
+show_percentage = false
 
 [node name="Label" type="Label" parent="." unique_id=536300268]
-offset_right = 1.0
-offset_bottom = 23.0
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 40
+offset_left = 25.0
+offset_top = 70.0
+offset_right = 285.0
+offset_bottom = 95.0
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
+text = "Score: 0"
 script = ExtResource("3_27fn8")

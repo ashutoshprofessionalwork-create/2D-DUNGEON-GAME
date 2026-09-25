@@ -212,7 +212,7 @@ animations = [{
 
 [node name="villager" type="CharacterBody2D" unique_id=562930992 groups=["enemy"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 1
 script = ExtResource("1_b7f05")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=3926622]

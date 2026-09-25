@@ -207,7 +207,13 @@ func die():
 	queue_free()
 	
 func safe_move_and_slide():
+	if is_dead:
+		return
 	up_direction = Vector2.UP
 	if is_nan(velocity.x) or is_nan(velocity.y):
 		velocity = Vector2.ZERO
+	if is_nan(up_direction.x) or is_nan(up_direction.y) or up_direction.length_squared() == 0:
+		up_direction = Vector2.UP
+	else:
+		up_direction = up_direction.normalized()
 	move_and_slide()

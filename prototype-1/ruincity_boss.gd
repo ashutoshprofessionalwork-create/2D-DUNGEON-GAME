@@ -41,10 +41,23 @@ var health: int = 500:
 
 func _ready():
 	add_to_group("enemy")
+	if has_node("HIT_AREA_LH"):
+		$HIT_AREA_LH.add_to_group("enemy")
+	if has_node("HIT_AREA_RH"):
+		$HIT_AREA_RH.add_to_group("enemy")
 	health = max_health
 	if progress_bar:
 		progress_bar.max_value = max_health
 		progress_bar.value = health
+
+	if has_node("HIT_AREA_LH"):
+		var area_lh = $HIT_AREA_LH
+		if not area_lh.has_method("take_damage"):
+			area_lh.set_script(preload("res://hit_area_lh.gd"))
+	if has_node("HIT_AREA_RH"):
+		var area_rh = $HIT_AREA_RH
+		if not area_rh.has_method("take_damage"):
+			area_rh.set_script(preload("res://hit_area_lh.gd"))
 
 func _physics_process(delta: float):
 	if heavy_attack_timer > 0.0:
@@ -67,6 +80,14 @@ func _physics_process(delta: float):
 			if anim:
 				anim.flip_h = not facing_left
 
+func safe_move_and_slide():
+	if health <= 0:
+		return
+	if is_nan(velocity.x) or is_nan(velocity.y):
+		velocity = Vector2.ZERO
+	up_direction = Vector2.UP
+	move_and_slide()
+
 func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, force: float = 0.0):
 	if health <= 0:
 		return
@@ -87,6 +108,25 @@ func take_damage(amount: int = 10, source_position: Vector2 = Vector2.ZERO, forc
 		anim.modulate = Color(4.0, 0.4, 0.4, 1.0)
 		var timer = get_tree().create_timer(0.12)
 		timer.timeout.connect(func(): if is_instance_valid(anim): anim.modulate = Color(1, 1, 1, 1))
+
+func screen_shake(intensity: float = 10.0, duration: float = 0.3):
+	var cam: Camera2D = null
+	if player and is_instance_valid(player):
+		cam = player.get_node_or_null("Camera2D") if player.has_node("Camera2D") else player.get_node_or_null("Camera2D2")
+	if not cam and get_viewport():
+		cam = get_viewport().get_camera_2d()
+	
+	if not cam:
+		return
+		
+	var orig_offset = cam.offset
+	var elapsed = 0.0
+	while elapsed < duration and is_instance_valid(cam):
+		cam.offset = orig_offset + Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
+		await get_tree().process_frame
+		elapsed += get_process_delta_time()
+	if is_instance_valid(cam):
+		cam.offset = orig_offset
 
 func die():
 	if progress_bar:

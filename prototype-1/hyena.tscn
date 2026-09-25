@@ -233,7 +233,7 @@ size = Vector2(20, 14.5)
 
 [node name="hyena" type="CharacterBody2D" unique_id=562930992 groups=["enemy"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 1
 script = ExtResource("1_gpdr1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1829012736]

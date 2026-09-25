@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bq5t652bck7qd" path="res://rock_throw.gd" id="6_rock_throw_script"]
 [ext_resource type="Script" uid="uid://b3p7ou4wlef8v" path="res://heavy_attack.gd" id="7_heavy_script"]
 [ext_resource type="Script" uid="uid://cgamd1q1068ss" path="res://death.gd" id="8_death_script"]
+[ext_resource type="Script" uid="uid://cs3y20kojerlk" path="res://hit_area_lh.gd" id="122_hwh0c"]
 [ext_resource type="Texture2D" uid="uid://2h36xui6mvqk" path="res://Animation/Attack/Armature_Attack_00.png" id="tex_atk_00"]
 [ext_resource type="Texture2D" uid="uid://dddp8m44i4jpc" path="res://Animation/Attack/Armature_Attack_01.png" id="tex_atk_01"]
 [ext_resource type="Texture2D" uid="uid://77li1b6beuj1" path="res://Animation/Attack/Armature_Attack_02.png" id="tex_atk_02"]
@@ -124,7 +125,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boss"]
 radius = 32.0
-height = 1296.6666
+height = 923.3333
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_boss"]
 animations = [{
@@ -546,6 +547,31 @@ animations = [{
 "speed": 16.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bg"]
+bg_color = Color(0.12, 0.05, 0.05, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.1, 0.1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
+bg_color = Color(0.85, 0.15, 0.15, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewrip"]
+size = Vector2(341.69928, 340.12036)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psnfu"]
+size = Vector2(330.00003, 323.3333)
+
 [node name="ruincity_boss" type="CharacterBody2D" unique_id=438823423]
 scale = Vector2(0.6, 0.6)
 collision_layer = 4
@@ -562,6 +588,7 @@ position = Vector2(-11.666664, -1.666666)
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_boss")
 animation = &"idle"
+metadata/_edit_lock_ = true
 
 [node name="FiniteStateMachine" type="Node2D" parent="." unique_id=1738841867]
 script = ExtResource("2_fsm_script")
@@ -595,4 +622,24 @@ offset_top = 20.0
 offset_right = 200.0
 offset_bottom = 40.0
 grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_boss_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
 value = 100.0
+show_percentage = false
+
+[node name="HIT_AREA_LH" type="Area2D" parent="." unique_id=922118962]
+script = ExtResource("122_hwh0c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HIT_AREA_LH" unique_id=1169832282]
+position = Vector2(-699.22644, 158.28413)
+rotation = 0.53805864
+shape = SubResource("RectangleShape2D_ewrip")
+
+[node name="HIT_AREA_RH" type="Area2D" parent="." unique_id=1703249249]
+position = Vector2(-1041.6666, 308.33334)
+script = ExtResource("122_hwh0c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HIT_AREA_RH" unique_id=473750708]
+position = Vector2(1823.3334, -165.00009)
+rotation = 0.76349
+shape = SubResource("RectangleShape2D_psnfu")

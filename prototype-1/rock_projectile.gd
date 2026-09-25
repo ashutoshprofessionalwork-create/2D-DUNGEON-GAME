@@ -1,5 +1,5 @@
 class_name RockProjectile
-extends Area2D
+extends RigidBody2D
 
 @export var speed: float = 400.0
 @export var damage: int = 20
@@ -8,7 +8,9 @@ var velocity: Vector2 = Vector2.ZERO
 
 func _ready():
 	collision_layer = 0
-	collision_mask = 1 # Player layer
+	collision_mask = 2 # Player layer (layer 2)
+	contact_monitor = true
+	max_contacts_reported = 4
 	
 	body_entered.connect(_on_body_entered)
 	
@@ -18,11 +20,11 @@ func _ready():
 
 func launch(direction: Vector2, custom_speed: float = 400.0, custom_damage: int = 20):
 	velocity = direction.normalized() * custom_speed
+	linear_velocity = velocity
 	damage = custom_damage
 	rotation = velocity.angle()
 
 func _physics_process(delta: float):
-	global_position += velocity * delta
 	rotation += 5.0 * delta # Spin while flying
 
 func _on_body_entered(body: Node2D):

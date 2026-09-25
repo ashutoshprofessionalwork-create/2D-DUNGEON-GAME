@@ -173,14 +173,13 @@ size = Vector2(26.5, 17.25)
 
 [node name="scoripian" type="CharacterBody2D" unique_id=1731859937]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 1
 script = ExtResource("1_lotcr")
 hit_effect_scene = ExtResource("2_hunni")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1038122434]
 position = Vector2(0.5, 7.5)
 shape = SubResource("RectangleShape2D_a6vn1")
-one_way_collision = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1603602556]
 position = Vector2(-4, -15)

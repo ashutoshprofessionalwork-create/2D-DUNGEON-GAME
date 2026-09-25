@@ -14,6 +14,7 @@ var health = 100
 @onready var sfx_jump: AudioStreamPlayer2D = $sfx_jump
  
 @onready var health_bar = get_parent().get_node("UI/HeartsUI") if get_parent() and get_parent().has_node("UI/HeartsUI") else null
+@onready var roll_bar = get_parent().get_node("UI/RollCooldownBar") if get_parent() and get_parent().has_node("UI/RollCooldownBar") else null
 var gravity = 1300
 @export var void_dist=100
 
@@ -84,9 +85,25 @@ func _ready():
 
 	anim.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
+func trigger_death():
+	if current_state == State.DEATH:
+		return
+	current_state = State.DEATH
+	velocity = Vector2.ZERO
+	collision_layer = 0
+	collision_mask = 0
+	
+	if get_tree() and get_tree().current_scene and not get_tree().current_scene.scene_file_path.is_empty():
+		Global.last_level_path = get_tree().current_scene.scene_file_path
+		
+	if SceneTransition:
+		SceneTransition.change_scene_file("res://deathmenu.tscn", 0.5)
+	else:
+		get_tree().change_scene_to_file("res://deathmenu.tscn")
+
 func _physics_process(delta):
 	if position.y > 1000:
-		get_tree().change_scene_to_file("res://deathmenu.tscn")
+		trigger_death()
 		return
 
 	if current_state == State.DEATH:
@@ -97,6 +114,12 @@ func _physics_process(delta):
 		combo_cooldown_timer -= delta
 	if roll_cooldown_timer > 0.0:
 		roll_cooldown_timer -= delta
+
+	if not roll_bar and get_parent() and get_parent().has_node("UI/RollCooldownBar"):
+		roll_bar = get_parent().get_node("UI/RollCooldownBar")
+	if roll_bar:
+		var fill_pct = 100.0 * (1.0 - (max(0.0, roll_cooldown_timer) / ROLL_COOLDOWN_TIME))
+		roll_bar.value = fill_pct
 
 	match current_state:
 		State.IDLE, State.MOVE, State.JUMP:
@@ -111,9 +134,15 @@ func _physics_process(delta):
 	update_animations()
 
 func safe_move_and_slide():
+	if current_state == State.DEATH:
+		return
 	up_direction = Vector2.UP
 	if is_nan(velocity.x) or is_nan(velocity.y):
 		velocity = Vector2.ZERO
+	if is_nan(up_direction.x) or is_nan(up_direction.y) or up_direction.length_squared() == 0:
+		up_direction = Vector2.UP
+	else:
+		up_direction = up_direction.normalized()
 	move_and_slide()
 
 func handle_movement(delta):
@@ -205,8 +234,12 @@ func _on_animated_sprite_2d_animation_finished():
 func deal_damage_to_enemies(force: float = 200.0, damage_to_deal: int = 10):
 	var enemies = get_tree().get_nodes_in_group("enemy")
 	for enemy in enemies:
-		var dist = global_position.distance_to(enemy.global_position)
-		var dir_to_enemy = sign(enemy.global_position.x - global_position.x)
+		var enemy_pos = enemy.global_position
+		if enemy.has_method("get_global_position_override"):
+			enemy_pos = enemy.get_global_position_override()
+			
+		var dist = global_position.distance_to(enemy_pos)
+		var dir_to_enemy = sign(enemy_pos.x - global_position.x)
 		
 		if dir_to_enemy == 0:
 			dir_to_enemy = facing_direction
@@ -229,6 +262,9 @@ func take_damage(amount):
 
 	print("Player took damage! HP left: ", health)
 	if health <= 0:
+		if get_tree() and get_tree().current_scene and not get_tree().current_scene.scene_file_path.is_empty():
+			Global.last_level_path = get_tree().current_scene.scene_file_path
+
 		current_state = State.DEATH
 		velocity = Vector2.ZERO
 		collision_layer = 0
@@ -250,7 +286,4 @@ func heal(amount: float) -> void:
 	
 func check_out_of_bounds():
 	if position.y > void_dist:
-		if SceneTransition:
-			SceneTransition.change_scene_file("res://deathmenu.tscn", 0.5)
-		else:
-			get_tree().change_scene_to_file("res://deathmenu.tscn")
+		trigger_death()

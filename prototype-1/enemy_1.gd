@@ -40,6 +40,14 @@ func _ready():
 
 
 
+func safe_move_and_slide():
+	if is_dead:
+		return
+	if is_nan(velocity.x) or is_nan(velocity.y):
+		velocity = Vector2.ZERO
+	up_direction = Vector2.UP
+	move_and_slide()
+
 func _physics_process(delta):
 	# Gravity
 	if not is_on_floor():
@@ -48,7 +56,6 @@ func _physics_process(delta):
 		velocity.y = 0
 
 	if is_dead:
-		move_and_slide()
 		return
 
 	# Handle Knockback physics independently of states
@@ -77,7 +84,7 @@ func _physics_process(delta):
 			velocity.x = 0
 			state = State.IDLE
 
-	move_and_slide()
+	safe_move_and_slide()
 	update_animation()
 func update_facing(direction_x: float):
 	var facing_left = direction_x > 0

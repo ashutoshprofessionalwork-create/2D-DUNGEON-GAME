@@ -15,13 +15,15 @@ func enter():
 		owner.is_casting = true
 
 	var direction = -1.0 if owner.facing_left else 1.0
+	var range_width = owner.heavy_attack_range if "heavy_attack_range" in owner else 200.0
 
-	create_warning_indicator(owner.global_position + Vector2(direction * 50, 20))
+	create_warning_indicator(owner.global_position, direction, range_width)
 	if anim:
-		anim.modulate = Color(3.0, 0.2, 0.2, 1.0)
+		# Changed red to warning orange/gold tint (Color(1.5, 0.7, 0.2, 1.0))
+		anim.modulate = Color(1.5, 0.7, 0.2, 1.0)
 
 	if owner.is_inside_tree() and owner.get_tree():
-		await owner.get_tree().create_timer(0.5).timeout
+		await owner.get_tree().create_timer(0.65).timeout
 	
 	if "is_casting" in owner:
 		owner.is_casting = false
@@ -45,7 +47,7 @@ func enter():
 		anim.play(target_anim)
 
 	if anim:
-		while is_attacking and owner.is_inside_tree() and owner.get_tree() and anim.animation == target_anim and anim.frame < 4:
+		while is_attacking and owner.is_inside_tree() and owner.get_tree() and anim.animation == target_anim and anim.frame < 6:
 			await owner.get_tree().process_frame
 	
 	is_staggered = owner.is_staggered if "is_staggered" in owner else false
@@ -54,6 +56,9 @@ func enter():
 		return
 
 	remove_warning_indicator()
+
+	if owner.has_method("screen_shake"):
+		owner.screen_shake(18.0, 0.45)
 
 	# Directional Frontal Cone Check (Roll behind vulnerability)
 	if owner.health > 0 and owner.player and is_instance_valid(owner.player):
@@ -70,17 +75,24 @@ func enter():
 
 	is_attacking = false
 
-func create_warning_indicator(pos: Vector2):
+func create_warning_indicator(boss_pos: Vector2, dir: float, attack_dist: float):
 	remove_warning_indicator()
 	indicator = Polygon2D.new()
-	indicator.color = Color(1.0, 0.0, 0.0, 0.7)
+	indicator.color = Color(1.0, 0.45, 0.0, 0.5) # Warning orange/gold ground indicator
+	
+	# Create ground zone box right in front of boss where the attack lands
+	var start_x = 0.0
+	var end_x = dir * (attack_dist + 40.0)
+	var ground_y = 35.0 # Height offset to project on ground under boss
+	var zone_height = 24.0
+
 	indicator.polygon = PackedVector2Array([
-		Vector2(-40, -12),
-		Vector2(40, -12),
-		Vector2(40, 12),
-		Vector2(-40, 12)
+		Vector2(start_x, ground_y - zone_height * 0.5),
+		Vector2(end_x, ground_y - zone_height * 0.5),
+		Vector2(end_x, ground_y + zone_height * 0.5),
+		Vector2(start_x, ground_y + zone_height * 0.5)
 	])
-	indicator.global_position = pos
+	indicator.global_position = boss_pos
 	if owner.get_parent():
 		owner.get_parent().add_child(indicator)
 
@@ -90,10 +102,16 @@ func remove_warning_indicator():
 		indicator = null
 
 func physics_update(_delta: float):
-	if not owner.is_on_floor():
-		owner.velocity.y += 1200.0 * _delta
-	owner.velocity.x = 0
-	owner.move_and_slide()
+	if owner.has_method("safe_move_and_slide"):
+		if not owner.is_on_floor():
+			owner.velocity.y += 1200.0 * _delta
+		owner.velocity.x = 0
+		owner.safe_move_and_slide()
+	else:
+		if not owner.is_on_floor():
+			owner.velocity.y += 1200.0 * _delta
+		owner.velocity.x = 0
+		owner.move_and_slide()
 
 func exit():
 	super.exit()

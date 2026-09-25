@@ -6,9 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cs54ba4361we4" path="res://ui.tscn" id="4_3itbr"]
 [ext_resource type="Texture2D" uid="uid://cq5ot5tmjkt75" path="res://Tileset.png" id="5_hu0wr"]
 [ext_resource type="PackedScene" uid="uid://hawf3t1qoahj" path="res://player.tscn" id="6_mqhm1"]
-[ext_resource type="PackedScene" uid="uid://cgct8ku32ofyt" path="res://spawner.tscn" id="7_ux1o3"]
-[ext_resource type="Script" uid="uid://2oyq0vnqy1nk" path="res://enemy_spawn_info.gd" id="8_xxf1j"]
-[ext_resource type="PackedScene" uid="uid://cxky7m7tqmlgj" path="res://ruincity_boss.tscn" id="9_nqsvg"]
+[ext_resource type="PackedScene" uid="uid://b5s0st3r2o72k" path="res://zombieruicity.tscn" id="10_zombie_ruin"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eq6nc"]
 texture = ExtResource("5_hu0wr")
@@ -1406,15 +1404,8 @@ _data = {
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eq6nc"]
 distance = -300.0
 
-[sub_resource type="Resource" id="Resource_cdpnt"]
-script = ExtResource("8_xxf1j")
-metadata/_custom_type_script = "uid://2oyq0vnqy1nk"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eq6nc"]
 size = Vector2(1309, 232)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvxqx"]
-size = Vector2(214.25, 932)
 
 [node name="ruincity" type="Node2D" unique_id=910605102]
 position = Vector2(-3, 0)
@@ -1486,12 +1477,6 @@ texture_filter = 1
 position = Vector2(0, 46)
 shape = SubResource("WorldBoundaryShape2D_eq6nc")
 
-[node name="spawner" parent="." unique_id=282977003 instance=ExtResource("7_ux1o3")]
-position = Vector2(0, 100)
-spawn_list = Array[ExtResource("8_xxf1j")]([SubResource("Resource_cdpnt")])
-base_spawn_time = 3.0
-metadata/_edit_lock_ = true
-
 [node name="WorldBoundary3" type="StaticBody2D" parent="." unique_id=1190036851]
 texture_filter = 1
 position = Vector2(2924, 39)
@@ -1501,16 +1486,26 @@ position = Vector2(-3274, -111)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_eq6nc")
 
-[node name="DetectionArea" type="Area2D" parent="." unique_id=1810975754]
-collision_layer = 0
-collision_mask = 130
+[node name="Zombies" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1063950254]
-position = Vector2(14354, -27)
-shape = SubResource("RectangleShape2D_vvxqx")
+[node name="ZombieRuinCity1" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(-800, 310)
 
-[node name="ruincity_boss" parent="." unique_id=353576630 instance=ExtResource("9_nqsvg")]
-position = Vector2(2723, -32)
+[node name="ZombieRuinCity2" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(-350, 310)
 
-[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
-[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[node name="ZombieRuinCity3" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(100, 310)
+
+[node name="ZombieRuinCity4" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(600, 310)
+
+[node name="ZombieRuinCity5" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(1100, 310)
+
+[node name="ZombieRuinCity6" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(1600, 310)
+
+[node name="ZombieRuinCity7" parent="Zombies" instance=ExtResource("10_zombie_ruin")]
+position = Vector2(2000, 310)
+

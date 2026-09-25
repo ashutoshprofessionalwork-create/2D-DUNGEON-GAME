@@ -9,6 +9,12 @@ func _ready():
 	# Automatically find the player so the Inspector doesn't break the clones
 	player = get_tree().current_scene.get_node_or_null("player")
 
+func safe_move_and_slide():
+	if is_nan(velocity.x) or is_nan(velocity.y):
+		velocity = Vector2.ZERO
+	up_direction = Vector2.UP
+	move_and_slide()
+
 func _physics_process(delta):
 	# If the player isn't in the scene yet, do nothing
 	if not is_instance_valid(player):
@@ -26,7 +32,7 @@ func _physics_process(delta):
 	if direction != 0:
 		anim.flip_h = direction < 0
 
-	move_and_slide()
+	safe_move_and_slide()
 
 	# Check for collisions with the player
 	for i in get_slide_collision_count():

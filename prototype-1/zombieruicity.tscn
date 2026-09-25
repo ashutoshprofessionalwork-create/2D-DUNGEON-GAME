@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bq4ngtya5kxll" path="res://zombieruicity.gd" id="1_q5x0x"]
 [ext_resource type="AudioStream" uid="uid://di0ikh5ua6kqf" path="res://sound/dragon-studio-monster-growl-376892.mp3" id="2_6fuj5"]
+[ext_resource type="PackedScene" uid="uid://cusggwh1k0l2c" path="res://hit_effect.tscn" id="2_rr3nk"]
 [ext_resource type="AudioStream" uid="uid://bqd4ph4npe4dg" path="res://sound/freesound_community-plastic-crunch-83779.mp3" id="3_rr3nk"]
 [ext_resource type="AudioStream" uid="uid://enqft3hakyr2" path="res://sound/photos-leaf-crunch-409641.mp3" id="4_wcdd6"]
 [ext_resource type="Texture2D" uid="uid://dtpbspru307ik" path="res://Zombie Man/Attack_1.png" id="5_s075k"]
@@ -307,8 +308,8 @@ animations = [{
 
 [node name="zombieruicity" type="CharacterBody2D" unique_id=1731859937]
 collision_layer = 4
-collision_mask = 3
 script = ExtResource("1_q5x0x")
+hit_effect_scene = ExtResource("2_rr3nk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1038122434]
 position = Vector2(0, 9)
@@ -341,7 +342,9 @@ volume_db = -10.0
 position = Vector2(2, -9)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_kavql")
-animation = &"walk"
+animation = &"attack"
+frame = 13
+frame_progress = 1.0
 metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

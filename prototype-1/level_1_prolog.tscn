@@ -126,6 +126,7 @@ text = "TALK  TO QUEEN
 libraries/ = SubResource("AnimationLibrary_wre1u")
 
 [node name="kingnpc" parent="." unique_id=632407528 instance=ExtResource("5_3jc4g")]
+texture_filter = 1
 position = Vector2(-226, 151)
 scale = Vector2(4, 4)
 metadata/_edit_lock_ = true

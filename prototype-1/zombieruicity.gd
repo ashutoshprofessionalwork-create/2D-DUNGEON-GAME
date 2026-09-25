@@ -32,32 +32,36 @@ var state = State.IDLE
 
 
 func _ready():
+	scale = Vector2(5,5)
 	var level_name = get_parent().name # Gets "Level1", "Level2", etc.
-	scale = Vector2(1, 1)
+	if get_parent() and get_parent().name == "Zombies" and get_parent().get_parent():
+		level_name = get_parent().get_parent().name
 
 	if level_name == "jungle":
 		detection_range = 1100
 		attack_range = 130
 		speed = 400
 		scale = Vector2(5, 5)
-		hit_effect=Vector2(5,5)
-	elif level_name=="ruincity":
+		hit_effect = Vector2(5, 5)
+	elif level_name == "ruincity":
 		detection_range = 800
 		attack_range = 130
 		speed = 400
 		scale = Vector2(5, 5)
-		hit_effect=Vector2(5,5)
-		
-	
-	elif level_name=="jungle_night":
-		detection_range=1000
-		attack_range=20
-		speed=200
-		scale=Vector2(2,2)
-		
+		hit_effect = Vector2(5, 5)
+	elif level_name == "jungle_night":
+		detection_range = 1000
+		attack_range = 20
+		speed = 200
+		scale = Vector2(2, 2)
+		hit_effect = Vector2(2, 2)
 	elif level_name == "level2":
 		scale = Vector2(1, 1)
-		hit_effect=Vector2(1,1)
+		hit_effect = Vector2(1, 1)
+	else:
+		# Default fallback for ruincity or placed zombies
+		scale = Vector2(5, 5)
+		hit_effect = Vector2(5, 5)
 
 	current_health = max_health
 	add_to_group("enemy")
@@ -188,11 +192,12 @@ func take_damage(amount: int, source_position: Vector2 = Vector2.ZERO, force: fl
 	if hit_effect_scene:
 		var effect = hit_effect_scene.instantiate()
 		effect.global_position = global_position
-		#var effect = hit_effect_scene.instantiate()
-		#effect.global_position = global_position
-		#effect.scale=hit_effect # behenchod chal na
-		#get_parent().add_child(effect)
 		effect.scale = hit_effect
+		if effect is CPUParticles2D:
+			effect.scale_amount_min *= hit_effect.x
+			effect.scale_amount_max *= hit_effect.x
+			effect.initial_velocity_min *= min(hit_effect.x, 2.5)
+			effect.initial_velocity_max *= min(hit_effect.x, 2.5)
 		get_tree().current_scene.add_child(effect)
 	if current_health <= 0:
 		die()
@@ -248,7 +253,13 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		player_in_hitbox = false
 		
 func safe_move_and_slide():
+	if is_dead:
+		return
 	up_direction = Vector2.UP
 	if is_nan(velocity.x) or is_nan(velocity.y):
 		velocity = Vector2.ZERO
+	if is_nan(up_direction.x) or is_nan(up_direction.y) or up_direction.length_squared() == 0:
+		up_direction = Vector2.UP
+	else:
+		up_direction = up_direction.normalized()
 	move_and_slide()

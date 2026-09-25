@@ -1,5 +1,7 @@
 extends Node
 
+var last_level_path: String = "res://level_1.tscn"
+
 var score: int = 0:
 	set(value):
 		score = value
